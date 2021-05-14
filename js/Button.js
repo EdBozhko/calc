@@ -11,9 +11,13 @@ class Button {
   }
 
   onButtonClick(event) {
+    this.#board.currentButton = this;
     this.#onclick(this);
   }
   get value() {
     return this.#value;
+  }
+  get type() {
+    return this.#type;
   }
 }

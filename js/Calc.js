@@ -13,7 +13,8 @@ class Calc {
       this,
       this.onDigitalButtonPress,
       this.onOperationButtonPress,
-      this.onEqualityButtonPress
+      this.onEqualityButtonPress,
+      this.onOperationList
     ); // передаем функции отслеживания клика из самого калькулятора в аргументы конструктора class Board
     this.#processor = new Processors(this, this.onResult);
     this.#display = new Display(this);
@@ -39,6 +40,8 @@ class Calc {
   onResult = (result) => {
     this.#display.result = result;
   };
+
+  onOperationList = (operationList) => {};
   // -----------------------------
   // чтобы получить доступ приватной переменной board , для доступа в других классах
   get board() {

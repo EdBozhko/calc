@@ -4,15 +4,14 @@ class Board {
   #equalityButton;
   #operationsList = ["+", "-", "*", "/"];
   #calc;
+  #currentButton;
+  #prevButton;
   constructor(
     calc,
     onDigitalButtonClick,
     onOperationButtonClick,
     onEqualityButtonClick
   ) {
-    this.#digitalButtonList;
-    this.#operationButtonList;
-    this.#equalityButton;
     this.#calc = calc;
 
     for (let i = 0; i < 10; i++) {
@@ -44,7 +43,14 @@ class Board {
   get equalityButton() {
     return this.#equalityButton;
   }
-  // get operationsList() {
-  //   return this.#operationsList;
-  // }
+  get currentButton() {
+    return this.#currentButton;
+  }
+  set currentButton(value) {
+    this.#prevButton = this.#currentButton;
+    this.#currentButton = value;
+  }
+  get prevButton() {
+    return this.#prevButton;
+  }
 }

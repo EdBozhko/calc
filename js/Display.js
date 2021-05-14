@@ -11,7 +11,6 @@ class Display {
   }
   set result(value) {
     this.#result = value;
-    console.log("display");
-    console.log(this.#result);
+    console.log(`display stack ${this.#result}`);
   }
 }
