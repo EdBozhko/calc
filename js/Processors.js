@@ -5,16 +5,18 @@ class Processors {
   #stack;
   #stackMemo;
   #onResult;
+  #onMemoValue;
   /**
    *
    * @param {Calc} calc
    * @param {()=>{}} onResult
    */
-  constructor(calc, onResult) {
+  constructor(calc, onResult, onMemoValue) {
     this.#calc = calc; // приинимаем в аргумент и сохраняем ссылку на Calc, который создал процессор
     this.#stack = "0"; // стек для хранения ТЕКУЩЕГО ЗНАЧЕНИЯ, ПОСЛЕДНЕЙ ОПЕРАЦИИ, ИСТОРИЯ ОПЕРАЦИЙ
     this.#stackMemo = [];
     this.#onResult = onResult;
+    this.#onMemoValue = onMemoValue;
   }
 
   onDigitalButtonPress(button) {
@@ -36,6 +38,7 @@ class Processors {
     console.log(`stack memo ${this.#stackMemo}`);
 
     this.#onResult(this.#stack);
+    this.#onMemoValue(this.#stackMemo.join(""));
   }
 
   onOperationButtonPress(button) {
@@ -48,6 +51,7 @@ class Processors {
     console.log(`stack ${this.#stack}`);
     console.log(`stack memo ${this.#stackMemo}`);
     this.#onResult(this.#stack);
+    this.#onMemoValue(this.#stackMemo.join(""));
   }
 
   onEqualityButtonPress(button) {
@@ -61,5 +65,6 @@ class Processors {
     console.log(`stack memo ${this.#stackMemo}`);
 
     this.#onResult(this.#stack);
+    this.#onMemoValue(this.#stackMemo.join(""));
   }
 }

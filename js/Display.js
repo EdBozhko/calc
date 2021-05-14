@@ -1,9 +1,11 @@
 class Display {
   #calc;
   #result = 0;
-  constructor(calc, value = 0) {
+  #memo;
+  constructor(calc, value = 0, memoValue = "") {
     this.#calc = calc;
     this.#result = value;
+    this.#memo = memoValue;
   }
 
   get result() {
@@ -11,6 +13,14 @@ class Display {
   }
   set result(value) {
     this.#result = value;
-    console.log(`display stack ${this.#result}`);
+    console.log(`display result ${this.#result}`);
+  }
+
+  get memoValue() {
+    return this.#memo;
+  }
+  set memoValue(value) {
+    this.#memo = value;
+    console.log(`display memo ${this.#memo}`);
   }
 }
