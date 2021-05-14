@@ -14,7 +14,7 @@ class Calc {
       this.onDigitalButtonPress,
       this.onOperationButtonPress,
       this.onEqualityButtonPress,
-      this.onOperationList
+      this.onBackspaceButtonPress
     ); // передаем функции отслеживания клика из самого калькулятора в аргументы конструктора class Board
     this.#processor = new Processors(this, this.onResult, this.onMemoValue);
     this.#display = new Display(this);
@@ -35,6 +35,9 @@ class Calc {
 
   onEqualityButtonPress = (button) => {
     this.#processor.onEqualityButtonPress(button);
+  };
+  onBackspaceButtonPress = (button) => {
+    this.#processor.onBackspaceButtonPress(button);
   };
 
   onResult = (result) => {

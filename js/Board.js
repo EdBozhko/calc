@@ -2,6 +2,7 @@ class Board {
   #digitalButtonList = [];
   #operationButtonList = [];
   #equalityButton;
+  #backspaceButton;
   #operationsList = ["+", "-", "*", "/"];
   #calc;
   #currentButton;
@@ -10,7 +11,8 @@ class Board {
     calc,
     onDigitalButtonClick,
     onOperationButtonClick,
-    onEqualityButtonClick
+    onEqualityButtonClick,
+    onBackspaceButtonClick
   ) {
     this.#calc = calc;
     this.#currentButton = {};
@@ -34,6 +36,7 @@ class Board {
     }
 
     this.#equalityButton = new EqualityButton(this, onEqualityButtonClick);
+    this.#backspaceButton = new BackspaceButton(this, onBackspaceButtonClick);
   }
   get digitalButtonList() {
     return this.#digitalButtonList;
@@ -43,6 +46,9 @@ class Board {
   }
   get equalityButton() {
     return this.#equalityButton;
+  }
+  get backspaceButton() {
+    return this.#backspaceButton;
   }
   get currentButton() {
     return this.#currentButton;
