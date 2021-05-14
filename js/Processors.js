@@ -81,4 +81,20 @@ class Processors {
     this.#onMemoValue(this.#stackMemo.join(""));
     console.log(this.#calc.board.currentButton.type);
   }
+
+  onBackspaceButtonPress(button) {
+    console.log(button);
+    console.log(`button value ${button.value}`);
+    if (this.#calc.board.prevButton.type === "equality") {
+      this.#stackMemo.length = 0;
+    } else {
+      this.#stack = this.#stack.slice(0, -1);
+      this.#stackMemo = this.#stackMemo.splice(this.#stackMemo.length - 1, 1);
+    }
+    console.log(`stack ${this.#stack}`);
+    console.log(`stack memo ${this.#stackMemo}`);
+    this.#onResult(this.#stack);
+    this.#onMemoValue(this.#stackMemo.join(""));
+    console.log(this.#calc.board.currentButton.type);
+  }
 }
