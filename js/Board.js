@@ -16,7 +16,11 @@ class Board {
     this.#calc = calc;
 
     for (let i = 0; i < 10; i++) {
-      const digitalButton = new DigitalButton(this, i, onDigitalButtonClick);
+      const digitalButton = new DigitalButton(
+        this,
+        i.toString(),
+        onDigitalButtonClick
+      );
       this.#digitalButtonList.push(digitalButton);
     }
 

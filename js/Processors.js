@@ -11,7 +11,7 @@ class Processors {
    */
   constructor(calc, onResult) {
     this.#calc = calc; // приинимаем в аргумент и сохраняем ссылку на Calc, который создал процессор
-    this.#stack = [0, "", []]; // стек для хранения ТЕКУЩЕГО ЗНАЧЕНИЯ, ПОСЛЕДНЕЙ ОПЕРАЦИИ, ИСТОРИЯ ОПЕРАЦИЙ
+    this.#stack = ["0", "", []]; // стек для хранения ТЕКУЩЕГО ЗНАЧЕНИЯ, ПОСЛЕДНЕЙ ОПЕРАЦИИ, ИСТОРИЯ ОПЕРАЦИЙ
     this.#onResult = onResult;
   }
 
@@ -20,12 +20,16 @@ class Processors {
 
     console.log(button);
     console.log(button.value);
-    if (this.#stack[1].length > 0) {
-      // условие проверяет, если при нажатии на цифровую кнопку в последних операциях, что-то есть,
-      this.#stack[0] = button.value.toString(); // тогда текущее значение принимает значение нажато цифровой кнопки и переобразуется в стринг
-      this.#stack[1] = ""; //последние операции очищаются
+    if (this.#stack[0] === "0") {
+      this.#stack[0] = button.value;
     } else {
-      this.#stack[0] = (this.#stack[0] + button.value).toString(); // в противном случае, к текущему значению добавляется значение цифровой кнопки и переобразуется в стринг
+      if (this.#stack[1].length > 0) {
+        // условие проверяет, если при нажатии на цифровую кнопку в последних операциях, что-то есть,
+        this.#stack[0] = button.value; // тогда текущее значение принимает значение нажато цифровой кнопки и переобразуется в стринг
+        this.#stack[1] = ""; //последние операции очищаются
+      } else {
+        this.#stack[0] = this.#stack[0] + button.value; // в противном случае, к текущему значению добавляется значение цифровой кнопки и переобразуется в стринг
+      }
     }
 
     console.log(this.#stack);
@@ -46,14 +50,12 @@ class Processors {
 
     console.log(button);
     console.log(button.value);
-    console.log(eval(this.#stack[0]));
-    this.#stack[1] = (
-      this.#stack[0] +
-      button.value +
-      eval(this.#stack[0])
-    ).toString(); // в последнюю оперцию записываем все уравнение и результат
+    this.calcResult = eval(this.#stack[0]).toString();
+    console.log(this.calcResult);
+    this.#stack[1] = this.#stack[0] + button.value + this.calcResult;
+    // в последнюю оперцию записываем все уравнение и результат
     this.#stack[2].push(this.#stack[1]); // из последеней операции отправляем в историю операций
-    this.#stack[0] = eval(this.#stack[0]); // текущее значение принимает результат вычеслений
+    this.#stack[0] = this.calcResult; // текущее значение принимает результат вычеслений
     console.log(this.#stack);
     this.#onResult(this.#stack[0]);
   }
