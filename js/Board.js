@@ -13,6 +13,7 @@ class Board {
     onEqualityButtonClick
   ) {
     this.#calc = calc;
+    this.#currentButton = {};
 
     for (let i = 0; i < 10; i++) {
       const digitalButton = new DigitalButton(
