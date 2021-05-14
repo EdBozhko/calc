@@ -44,7 +44,6 @@ class Calc {
   onMemoValue = (memoValue) => {
     this.#display.memoValue = memoValue;
   };
-  onOperationList = (operationList) => {};
   // -----------------------------
   // чтобы получить доступ приватной переменной board , для доступа в других классах
   get board() {

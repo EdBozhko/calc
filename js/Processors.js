@@ -24,21 +24,29 @@ class Processors {
 
     console.log(button);
     console.log(`button value ${button.value}`);
-    if (
-      this.#stack === "0" ||
-      this.#calc.board.prevButton.type === "operation"
-    ) {
+    if (this.#calc.board.prevButton.type === "equality") {
+      this.#stackMemo.length = 0;
       this.#stack = button.value;
       this.#stackMemo.push(this.#stack);
     } else {
-      this.#stack = this.#stack + button.value;
-      this.#stackMemo.push(button.value);
+      if (
+        this.#stack === "0" ||
+        this.#calc.board.prevButton.type === "operation"
+      ) {
+        this.#stack = button.value;
+        this.#stackMemo.push(this.#stack);
+      } else {
+        this.#stack = this.#stack + button.value;
+        this.#stackMemo.push(button.value);
+      }
     }
+
     console.log(`stack ${this.#stack}`);
     console.log(`stack memo ${this.#stackMemo}`);
 
     this.#onResult(this.#stack);
     this.#onMemoValue(this.#stackMemo.join(""));
+    console.log(this.#calc.board.prevButton.type);
   }
 
   onOperationButtonPress(button) {
@@ -46,8 +54,13 @@ class Processors {
 
     console.log(button);
     console.log(`button value ${button.value}`);
-
-    this.#stackMemo.push(button.value); // к текущему значению прибавляется значение кнопки, на которой произошел клик
+    if (this.#calc.board.prevButton.type === "equality") {
+      this.#stackMemo.length = 0;
+      this.#stackMemo.push(this.#stack); // к текущему значению прибавляется значение кнопки, на которой произошел клик
+      this.#stackMemo.push(button.value); // к текущему значению прибавляется значение кнопки, на которой произошел клик
+    } else {
+      this.#stackMemo.push(button.value); // к текущему значению прибавляется значение кнопки, на которой произошел клик
+    }
     console.log(`stack ${this.#stack}`);
     console.log(`stack memo ${this.#stackMemo}`);
     this.#onResult(this.#stack);
@@ -66,5 +79,6 @@ class Processors {
 
     this.#onResult(this.#stack);
     this.#onMemoValue(this.#stackMemo.join(""));
+    console.log(this.#calc.board.currentButton.type);
   }
 }
