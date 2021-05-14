@@ -4,8 +4,10 @@ class Processors {
   #calc; //объявление приватных переменных
   #stack;
   #stackMemo;
+  #stackHistory;
   #onResult;
   #onMemoValue;
+
   /**
    *
    * @param {Calc} calc
@@ -15,6 +17,7 @@ class Processors {
     this.#calc = calc; // приинимаем в аргумент и сохраняем ссылку на Calc, который создал процессор
     this.#stack = "0"; // стек для хранения ТЕКУЩЕГО ЗНАЧЕНИЯ, ПОСЛЕДНЕЙ ОПЕРАЦИИ, ИСТОРИЯ ОПЕРАЦИЙ
     this.#stackMemo = [];
+    this.#stackHistory = [];
     this.#onResult = onResult;
     this.#onMemoValue = onMemoValue;
   }
@@ -46,7 +49,6 @@ class Processors {
 
     this.#onResult(this.#stack);
     this.#onMemoValue(this.#stackMemo.join(""));
-    console.log(this.#calc.board.prevButton.type);
   }
 
   onOperationButtonPress(button) {
@@ -74,12 +76,13 @@ class Processors {
     console.log(`button value ${button.value}`);
     this.#stack = eval(this.#stackMemo.join("")).toString();
     this.#stackMemo.push(button.value); // к текущему значению прибавляется значение кнопки, на которой произошел клик
+    this.#stackHistory.push(this.#stackMemo.join("") + this.#stack);
     console.log(`stack ${this.#stack}`);
     console.log(`stack memo ${this.#stackMemo}`);
+    console.log(`stack history ${this.#stackHistory}`);
 
     this.#onResult(this.#stack);
     this.#onMemoValue(this.#stackMemo.join(""));
-    console.log(this.#calc.board.currentButton.type);
   }
 
   onBackspaceButtonPress(button) {
@@ -89,12 +92,11 @@ class Processors {
       this.#stackMemo.length = 0;
     } else {
       this.#stack = this.#stack.slice(0, -1);
-      this.#stackMemo = this.#stackMemo.splice(this.#stackMemo.length - 1, 1);
+      this.#stackMemo.pop();
     }
     console.log(`stack ${this.#stack}`);
     console.log(`stack memo ${this.#stackMemo}`);
     this.#onResult(this.#stack);
     this.#onMemoValue(this.#stackMemo.join(""));
-    console.log(this.#calc.board.currentButton.type);
   }
 }
