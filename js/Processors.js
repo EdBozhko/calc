@@ -33,6 +33,7 @@ class Processors {
     }
 
     console.log(this.#stack);
+    this.#onResult(this.#stack[0]);
   }
 
   onOperationButtonPress(button) {
@@ -43,6 +44,7 @@ class Processors {
     this.#stack[0] = this.#stack[0] + button.value; // к текущему значению прибавляется значение кнопки, на которой произошел клик
     this.#stack[1] = ""; // последние операции очищаются, чтобы корректно срабатывала проверка в предыдущей функции
     console.log(this.#stack);
+    this.#onResult(this.#stack[0]);
   }
 
   onEqualityButtonPress(button) {
