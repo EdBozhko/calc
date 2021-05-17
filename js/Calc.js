@@ -6,6 +6,8 @@ class Calc {
   #display;
   #board;
   #processor;
+  #container;
+  #calc;
   constructor() {
     this.onDigitalButtonPress = this.onDigitalButtonPress.bind(this); //для варианта с простой функцией, привязываем к calc(без этого функция кнопки передает в this кнопку, а не ссылку на сам калькулятор)
     // инициализируем создание доски с кнопками, процессора и дисплея
@@ -42,10 +44,12 @@ class Calc {
 
   onResult = (result) => {
     this.#display.result = result;
+    this.#display.displayResult.innerText = result;
   };
 
   onMemoValue = (memoValue) => {
     this.#display.memoValue = memoValue;
+    this.#display.displayMemo.innerText = memoValue;
   };
   // -----------------------------
   // чтобы получить доступ приватной переменной board , для доступа в других классах
@@ -55,4 +59,15 @@ class Calc {
   get display() {
     return this.#display;
   }
+  render(containerId) {
+    this.#container = document.getElementById(containerId);
+    this.#calc = document.createElement("div");
+    this.#display.render(this.#calc);
+    this.#board.render(this.#calc);
+    this.#container.appendChild(this.#calc);
+    this.onResult(this.#processor.stack);
+  }
 }
+
+const calc = new Calc();
+calc.render("container");

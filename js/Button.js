@@ -3,6 +3,8 @@ class Button {
   #value;
   #type;
   #onclick;
+  #container;
+  #button;
   constructor(board, value, type, onclick) {
     this.#board = board;
     this.#value = value;
@@ -19,5 +21,12 @@ class Button {
   }
   get type() {
     return this.#type;
+  }
+  render(containerId) {
+    this.#container = containerId;
+    this.#button = document.createElement("button");
+    this.#button.innerText = this.#value;
+    this.#button.addEventListener("click", this.onButtonClick.bind(this));
+    this.#container.appendChild(this.#button);
   }
 }

@@ -7,7 +7,6 @@ class Processors {
   #stackHistory;
   #onResult;
   #onMemoValue;
-
   /**
    *
    * @param {Calc} calc
@@ -18,8 +17,8 @@ class Processors {
     this.#stack = "0"; // стек для хранения ТЕКУЩЕГО ЗНАЧЕНИЯ, ПОСЛЕДНЕЙ ОПЕРАЦИИ, ИСТОРИЯ ОПЕРАЦИЙ
     this.#stackMemo = [];
     this.#stackHistory = [];
-    this.#onResult = onResult;
     this.#onMemoValue = onMemoValue;
+    this.#onResult = onResult;
   }
 
   onDigitalButtonPress(button) {
@@ -29,7 +28,7 @@ class Processors {
     console.log(`button value ${button.value}`);
 
     if (
-      typeof this.#calc.board.prevButton === "undefined" ||
+      // typeof this.#calc.board.prevButton === "undefined" ||
       this.#calc.board.prevButton.type === "equality"
     ) {
       this.#stackMemo.length = 0;
@@ -54,7 +53,9 @@ class Processors {
     this.#onResult(this.#stack);
     this.#onMemoValue(this.#stackMemo.join(""));
   }
-
+  get stack() {
+    return this.#stack;
+  }
   onOperationButtonPress(button) {
     // функция для получения операционной кнопки, на которой произошел клик
 
