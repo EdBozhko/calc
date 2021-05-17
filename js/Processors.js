@@ -27,7 +27,11 @@ class Processors {
 
     console.log(button);
     console.log(`button value ${button.value}`);
-    if (this.#calc.board.prevButton.type === "equality") {
+
+    if (
+      typeof this.#calc.board.currentButton !== "undefined" ||
+      this.#calc.board.prevButton.type === "equality"
+    ) {
       this.#stackMemo.length = 0;
       this.#stack = button.value;
       this.#stackMemo.push(this.#stack);
