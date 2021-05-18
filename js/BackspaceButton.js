@@ -4,8 +4,8 @@ class BackspaceButton extends Button {
     super(board, "⟸", "backspace", onclick);
     this.#board = board;
   }
-  render(containerId) {
-    super.render(containerId)
-    super.button.classList.add("class", "button--backspace")
+  render(container) {
+    super.render(container);
+    super.button.classList.add("class", "button--backspace");
   }
 }

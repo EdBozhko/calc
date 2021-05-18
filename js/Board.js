@@ -2,6 +2,7 @@ class Board {
   #digitalButtonList = [];
   #operationButtonList = [];
   #equalityButton;
+  // #negativeButton;
   #backspaceButton;
   #dotButton
   #operationsList = ["+", "-", "*", "/"];
@@ -19,6 +20,7 @@ class Board {
     onDigitalButtonClick,
     onOperationButtonClick,
     onEqualityButtonClick,
+    onNegativeButtonClick,
     onDotButtonClick,
     onBackspaceButtonClick
   ) {
@@ -42,6 +44,7 @@ class Board {
     }
 
     this.#equalityButton = new EqualityButton(this, onEqualityButtonClick);
+    // this.#negativeButton = new NegativeButton(this, onNegativeButtonClick);
     this.#dotButton = new DotButton(this, onDotButtonClick);
     this.#backspaceButton = new BackspaceButton(this, onBackspaceButtonClick);
     this.#currentButton = this.#digitalButtonList[0];
@@ -55,6 +58,9 @@ class Board {
   get equalityButton() {
     return this.#equalityButton;
   }  
+  // get negativeButton() {
+  //   return this.#negativeButton;
+  // }  
   get dotButton() {
     return this.#dotButton;
   }
@@ -71,8 +77,8 @@ class Board {
   get prevButton() {
     return this.#prevButton;
   }
-  render(containerId) {
-    this.#container = containerId;
+  render(container) {
+    this.#container = container;
     this.#board = document.createElement("div");
     this.#board.setAttribute("class", "board");
 
@@ -92,6 +98,7 @@ class Board {
     this.#backspaceButton.render(this.#operationBoard);
 
     this.#equalityButton.render(this.#operationBoard);
+    // this.#negativeButton.render(this.#digitalBoard);
     this.#dotButton.render(this.#digitalBoard);
     this.#board.appendChild(this.#digitalBoard);
     this.#board.appendChild(this.#operationBoard);

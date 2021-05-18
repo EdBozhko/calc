@@ -1,7 +1,7 @@
-class DotButton extends Button {
+class NegativeButton extends Button {
   #board;
   constructor(board, onclick) {
-    super(board, ".", "dot", onclick);
+    super(board, "±", "negative", onclick);
     this.#board = board;
   }
   render(container) {

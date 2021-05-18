@@ -89,21 +89,27 @@ class Processors {
     this.#onResult(this.#stack);
     this.#onMemoValue(this.#stackMemo.join(""));
   }
+  onNegativeButtonPress(button) {
 
+  }
   
-  onDotPress(button) {
+  onDotButtonPress(button) {
 
   }
 
   onBackspaceButtonPress(button) {
     console.log(button);
     console.log(`button value ${button.value}`);
-    if (this.#calc.board.prevButton.type === "equality") {
-      this.#stackMemo.length = 0;
-    } else {
-      this.#stack = this.#stack.slice(0, -1);
-      this.#stackMemo.pop();
-    }
+
+      if (this.#calc.board.prevButton.type === "equality") {
+        this.#stackMemo.length = 0;
+      } else {
+        
+        this.#stack = this.#stack.slice(0, -1);
+        this.#stackMemo.pop();
+        if (this.#stackMemo.length === 0 && this.#stack.length === 0) {this.#stack = this.#calc.board.digitalButtonList[0].value}
+      }
+
     console.log(`stack ${this.#stack}`);
     console.log(`stack memo ${this.#stackMemo}`);
     this.#onResult(this.#stack);

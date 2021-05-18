@@ -15,7 +15,7 @@ body {
   width: 334px;
   background-color: rgba(0, 0, 0, 0.85);
   position: relative;
-  top: 30vh;
+  top: 25vh;
   padding: 5px;
   box-sizing: border-box;
 }
@@ -56,6 +56,14 @@ body {
   gap: 2px;
 }
 
+.button--digital:nth-child(12) {
+  order: 12;
+}
+
+.button--digital:nth-child(11) {
+  order: 10;
+}
+
 .button--digital:nth-child(10) {
   order: 3;
 }
@@ -93,7 +101,7 @@ body {
 }
 
 .button--digital:nth-child(1) {
-  order: 10;
+  order: 11;
 }
 
 .operation-board {

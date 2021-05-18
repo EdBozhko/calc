@@ -39,8 +39,8 @@ class Display {
   set displayMemo(value) {
     this.#displayMemo = value;
   }
-  render(containerId) {
-    this.#container = containerId;
+  render(container) {
+    this.#container = container;
     this.#display = document.createElement("div");
     this.#display.setAttribute("class", "display");
     this.#displayMemo = document.createElement("span");
