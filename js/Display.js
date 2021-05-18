@@ -40,16 +40,16 @@ class Display {
     this.#displayMemo = value;
   }
   render(containerId) {
-    const br = document.createElement("br");
-
     this.#container = containerId;
     this.#display = document.createElement("div");
+    this.#display.setAttribute("class", "display");
     this.#displayMemo = document.createElement("span");
+    this.#displayMemo.setAttribute("class", "display__display-memo");
     this.#displayMemo.innerText = this.#memo;
     this.#displayResult = document.createElement("span");
+    this.#displayResult.setAttribute("class", "display__result");
     this.#displayResult.innerText = this.#memo;
     this.#display.appendChild(this.#displayMemo);
-    this.#display.appendChild(br);
     this.#display.appendChild(this.#displayResult);
     this.#container.appendChild(this.#display);
   }

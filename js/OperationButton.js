@@ -4,4 +4,8 @@ class OperationButton extends Button {
     super(board, value, "operation", onclick);
     this.#board = board;
   }
+  render(containerId) {
+    super.render(containerId)
+    super.button.classList.add("class", "button--operation")
+  }
 }

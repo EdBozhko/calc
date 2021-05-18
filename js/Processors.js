@@ -90,6 +90,11 @@ class Processors {
     this.#onMemoValue(this.#stackMemo.join(""));
   }
 
+  
+  onDotPress(button) {
+
+  }
+
   onBackspaceButtonPress(button) {
     console.log(button);
     console.log(`button value ${button.value}`);

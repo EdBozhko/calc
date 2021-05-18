@@ -11,4 +11,8 @@ class DigitalButton extends Button {
       console.error("the value must be between 0 and 9");
     }
   }
+  render(containerId) {
+    super.render(containerId)
+    super.button.classList.add("class", "button--digital")
+  }
 }

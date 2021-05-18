@@ -3,6 +3,7 @@ class Board {
   #operationButtonList = [];
   #equalityButton;
   #backspaceButton;
+  #dotButton
   #operationsList = ["+", "-", "*", "/"];
   #calc;
   #currentButton;
@@ -10,12 +11,15 @@ class Board {
   #container;
   #board;
   #digitalButton;
+  #digitalBoard;
+  #operationBoard;
   #operationButton;
   constructor(
     calc,
     onDigitalButtonClick,
     onOperationButtonClick,
     onEqualityButtonClick,
+    onDotButtonClick,
     onBackspaceButtonClick
   ) {
     this.#calc = calc;
@@ -38,6 +42,7 @@ class Board {
     }
 
     this.#equalityButton = new EqualityButton(this, onEqualityButtonClick);
+    this.#dotButton = new DotButton(this, onDotButtonClick);
     this.#backspaceButton = new BackspaceButton(this, onBackspaceButtonClick);
     this.#currentButton = this.#digitalButtonList[0];
   }
@@ -49,6 +54,9 @@ class Board {
   }
   get equalityButton() {
     return this.#equalityButton;
+  }  
+  get dotButton() {
+    return this.#dotButton;
   }
   get backspaceButton() {
     return this.#backspaceButton;
@@ -66,14 +74,28 @@ class Board {
   render(containerId) {
     this.#container = containerId;
     this.#board = document.createElement("div");
+    this.#board.setAttribute("class", "board");
+
+    this.#digitalBoard = document.createElement("div");
+    this.#digitalBoard.setAttribute("class", "board__digital-board");
+
+    this.#operationBoard = document.createElement("div");
+    this.#operationBoard.setAttribute("class", "operation-board");
+
     for (let i = 0; i < this.#digitalButtonList.length; i++) {
-      this.#digitalButtonList[i].render(this.#board);
+      this.#digitalButtonList[i].render(this.#digitalBoard);
     }
     for (let j = 0; j < this.#operationButtonList.length; j++) {
-      this.#operationButtonList[j].render(this.#board);
+      this.#operationButtonList[j].render(this.#operationBoard);
     }
-    this.#backspaceButton.render(this.#board);
-    this.#equalityButton.render(this.#board);
+
+    this.#backspaceButton.render(this.#operationBoard);
+
+    this.#equalityButton.render(this.#operationBoard);
+    this.#dotButton.render(this.#digitalBoard);
+    this.#board.appendChild(this.#digitalBoard);
+    this.#board.appendChild(this.#operationBoard);
+
     this.#container.appendChild(this.#board);
   }
 }

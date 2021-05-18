@@ -22,9 +22,13 @@ class Button {
   get type() {
     return this.#type;
   }
+  get button () {
+    return this.#button
+  }
   render(containerId) {
     this.#container = containerId;
     this.#button = document.createElement("button");
+    this.#button.setAttribute("class", "button")
     this.#button.innerText = this.#value;
     this.#button.addEventListener("click", this.onButtonClick.bind(this));
     this.#container.appendChild(this.#button);
