@@ -1,4 +1,4 @@
-class OperationButton extends Button {
+class OperationButton extends CalcButton {
   #board;
   constructor(board, value, onclick) {
     super(board, value, "operation", onclick);
@@ -6,6 +6,6 @@ class OperationButton extends Button {
   }
   render(container) {
     super.render(container);
-    super.button.classList.add("class", "button--operation");
+    super.button.classList.add("button--operation");
   }
 }

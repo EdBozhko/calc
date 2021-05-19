@@ -1,11 +1,11 @@
-class EqualityButton extends Button {
+class EqualityButton extends CalcButton {
   #board;
   constructor(board, onclick) {
     super(board, "=", "equality", onclick);
     this.#board = board;
   }
   render(container) {
-    super.render(container);
-    super.button.classList.add("class", "button--equality");
+    super.render(container)
+    super.button.classList.add("button--equality")
   }
 }

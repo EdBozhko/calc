@@ -1,4 +1,4 @@
-class DigitalButton extends Button {
+class DigitalButton extends CalcButton {
   #board;
   constructor(board, value, onclick) {
     super(board, value, "digital", onclick);
@@ -13,6 +13,6 @@ class DigitalButton extends Button {
   }
   render(container) {
     super.render(container);
-    super.button.classList.add("class", "button--digital");
+    super.button.classList.add("button--digital");
   }
 }

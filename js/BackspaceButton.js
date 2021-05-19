@@ -1,4 +1,4 @@
-class BackspaceButton extends Button {
+class BackspaceButton extends CalcButton {
   #board;
   constructor(board, onclick) {
     super(board, "⟸", "backspace", onclick);
@@ -6,6 +6,6 @@ class BackspaceButton extends Button {
   }
   render(container) {
     super.render(container);
-    super.button.classList.add("class", "button--backspace");
+    super.button.classList.add("button--backspace");
   }
 }
