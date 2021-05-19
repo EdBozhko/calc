@@ -2,17 +2,21 @@
 
 class Calc {
   //объявление приватных переменных
-  #header
+  #header;
   #display;
   #board;
   #processor;
   #container;
   #calc;
-  #calcContainer
+  #calcContainer;
   constructor() {
     this.onDigitalButtonPress = this.onDigitalButtonPress.bind(this); //для варианта с простой функцией, привязываем к calc(без этого функция кнопки передает в this кнопку, а не ссылку на сам калькулятор)
     // инициализируем создание доски с кнопками, процессора и дисплея
-    this.#header = new Header(this, this.onHideButtonPress.bind(this), this.onCloseButtonPress.bind(this))
+    this.#header = new Header(
+      this,
+      this.onHideButtonPress.bind(this),
+      this.onCloseButtonPress.bind(this)
+    );
     this.#board = new Board(
       this,
       this.onDigitalButtonPress,
@@ -30,11 +34,11 @@ class Calc {
   // функции отслеважиния клика на кнопку в Calc
 
   onHideButtonPress(button) {
-    this.#header.hideButton.hide(this.#display.display)
-    this.#header.hideButton.hide(this.#board.board)
+    this.#header.hideButton.hide(this.#display.display);
+    this.#header.hideButton.hide(this.#board.board);
   }
   onCloseButtonPress(button) {
-    this.#header.closeButton.close(this.#calc)
+    this.#header.closeButton.close(this.#calcContainer);
   }
   onDigitalButtonPress(button) {
     // вариант простой функции
@@ -79,15 +83,14 @@ class Calc {
 
   render(containerId) {
     this.#container = document.getElementById(containerId);
-this.#calcContainer = document.createElement('div')
-this.#calcContainer.setAttribute("class", "calculator-container");
-
+    this.#calcContainer = document.createElement("div");
+    this.#calcContainer.setAttribute("class", "calculator-container");
     this.#calc = document.createElement("div");
     this.#calc.setAttribute("class", "calculator");
-    this.#header.render(this.#calc)
+    this.#header.render(this.#calc);
     this.#display.render(this.#calc);
     this.#board.render(this.#calc);
-    this.#calcContainer.appendChild(this.#calc)
+    this.#calcContainer.appendChild(this.#calc);
     this.#container.appendChild(this.#calcContainer);
     this.onResult(this.#processor.stack);
   }
