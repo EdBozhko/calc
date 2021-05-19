@@ -2,34 +2,84 @@ body {
   margin: 0;
   padding: 0;
   display: flex;
+  flex-direction: column;
   color: #ffffff;
   font-family: "Segoe UI", Helvetica, sans-serif;
   font-size: 18px;
 }
 
+header button {
+  margin-bottom: 20px;
+  width: 100vw;
+  position: sticky;
+}
 #container {
   margin: 0 auto;
+  display: flex;
+  flex-shrink: 40;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
 }
 
 .calculator {
   width: 334px;
   background-color: rgba(0, 0, 0, 0.85);
-  position: relative;
-  top: 25vh;
-  padding: 5px;
-  box-sizing: border-box;
 }
 
 .calculator:hover {
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-.display {
+.button {
+  color: #ffffff;
+  background-color: #000000;
+  border: none;
+  height: 52px;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 500;
+}
+
+.button:hover {
+  background-color: #747474;
+}
+
+.header-calc {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-calc__calc-name {
+  font-size: 12px;
+  margin-left: 12px;
+}
+.header-calc__action-buttons-list {
+  display: flex;
+  align-items: center;
+}
+
+.header-calc__action-buttons-list button {
+  margin: 0;
+  padding: 0;
+  font-weight: lighter;
+  height: 34px;
+  width: 47px;
+  background-color: transparent;
+}
+
+.header-calc__close-button:hover {
+  background-color: #e81123;
+}
+
+.display-container {
+  padding-right: 15px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
-  height: 200px;
+  height: 120px;
 }
 
 .display__display-memo {
@@ -43,6 +93,10 @@ body {
 }
 
 .board {
+  margin: 55px 5px 5px 5px;
+}
+.board-container {
+  margin-bottom: 5px;
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 2px;
@@ -54,6 +108,11 @@ body {
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: max-content max-content max-content max-content;
   gap: 2px;
+}
+
+.board__digital-board,
+.operation-board {
+  margin-bottom: 5px;
 }
 
 .button--digital:nth-child(12) {
@@ -109,20 +168,6 @@ body {
   gap: 2px;
 }
 
-.button {
-  color: #ffffff;
-  background-color: #000000;
-  border: none;
-  height: 52px;
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: 500;
-}
-
-.button:hover {
-  background-color: #747474;
-}
-
 .button--operation,
 .button--backspace {
   background-color: rgba(0, 0, 0, 0.5);
@@ -138,4 +183,8 @@ body {
 
 .button--equality:hover {
   background-color: #0975ca;
+}
+
+.hide-element {
+  display: none;
 }
