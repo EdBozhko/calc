@@ -8,10 +8,14 @@ body {
   font-size: 18px;
 }
 
-header button {
+.main-header {
   margin-bottom: 20px;
-  width: 100vw;
   position: sticky;
+  top: 0;
+}
+
+.main-header button {
+  width: 100vw;
 }
 #container {
   margin: 0 auto;
