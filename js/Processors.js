@@ -61,12 +61,18 @@ class Processors {
 
     console.log(button);
     console.log(`button value ${button.value}`);
-    if (this.#calc.board.prevButton.type === "equality") {
-      this.#stackMemo.length = 0;
-      this.#stackMemo.push(this.#stack); // к текущему значению прибавляется значение кнопки, на которой произошел клик
+    if (this.#calc.board.prevButton.type === "operation") {
+      this.#stackMemo.pop();
       this.#stackMemo.push(button.value); // к текущему значению прибавляется значение кнопки, на которой произошел клик
+
     } else {
-      this.#stackMemo.push(button.value); // к текущему значению прибавляется значение кнопки, на которой произошел клик
+      if (this.#calc.board.prevButton.type === "equality") {
+        this.#stackMemo.length = 0;
+        this.#stackMemo.push(this.#stack); // к текущему значению прибавляется значение кнопки, на которой произошел клик
+        this.#stackMemo.push(button.value); // к текущему значению прибавляется значение кнопки, на которой произошел клик
+      } else {
+        this.#stackMemo.push(button.value); // к текущему значению прибавляется значение кнопки, на которой произошел клик
+      }
     }
     console.log(`stack ${this.#stack}`);
     console.log(`stack memo ${this.#stackMemo}`);
