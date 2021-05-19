@@ -1,19 +1,16 @@
 class Button {
-  #board;
   #value;
   #type;
   #onclick;
   #container;
   #button;
-  constructor(board, value, type, onclick) {
-    this.#board = board;
+  constructor(value, type, onclick) {
     this.#value = value;
     this.#type = type;
     this.#onclick = onclick;
   }
 
   onButtonClick(event) {
-    this.#board.currentButton = this;
     this.#onclick(this);
   }
   get value() {
