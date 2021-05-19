@@ -1,14 +1,12 @@
 class NewCalcButton extends Button {
-    #newCalc
-  constructor() {
+  #calcContainer;
+  #containerId;
+  constructor(calcContainer, containerId) {
     super("Створити новий калькулятор", "newCalc", onclick);
-    
+    this.#calcContainer = calcContainer;
+    this.#containerId = containerId;
   }
   onButtonClick(event) {
-      this.#newCalc = new Calc()
-      this.#newCalc.render("container")
+    this.#calcContainer.add(this.#containerId);
   }
 }
-
-const a = new NewCalcButton()
-a.render(document.querySelector('header'))
