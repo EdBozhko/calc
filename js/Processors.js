@@ -28,7 +28,7 @@ class Processors {
     console.log(`button value ${button.value}`);
 
     if (
-      // typeof this.#calc.board.prevButton === "undefined" ||
+
       this.#calc.board.prevButton.type === "equality"
     ) {
       this.#stackMemo.length = 0;
@@ -80,8 +80,14 @@ class Processors {
     console.log(button);
     console.log(`button value ${button.value}`);
     this.#stack = eval(this.#stackMemo.join("")).toString();
-    this.#stackMemo.push(button.value); // к текущему значению прибавляется значение кнопки, на которой произошел клик
-    this.#stackHistory.push(this.#stackMemo.join("") + this.#stack);
+    if (isNaN(this.#stack)) {
+      this.#stack = "Результат не определен"
+      this.#stackMemo.length = 0;
+    } else {
+      this.#stackMemo.push(button.value); // к текущему значению прибавляется значение кнопки, на которой произошел клик
+      this.#stackHistory.push(this.#stackMemo.join("") + this.#stack);
+      
+    }
     console.log(`stack ${this.#stack}`);
     console.log(`stack memo ${this.#stackMemo}`);
     console.log(`stack history ${this.#stackHistory}`);
@@ -89,13 +95,13 @@ class Processors {
     this.#onResult(this.#stack);
     this.#onMemoValue(this.#stackMemo.join(""));
   }
-  onNegativeButtonPress(button) {
+  // onNegativeButtonPress(button) {
 
-  }
+  // }
   
-  onDotButtonPress(button) {
+  // onDotButtonPress(button) {
 
-  }
+  // }
 
   onBackspaceButtonPress(button) {
     console.log(button);
