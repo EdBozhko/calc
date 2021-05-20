@@ -11,7 +11,7 @@ class Button {
   }
 
   onButtonClick(event) {
-    this.#onclick(this);
+    this.#onclick(this, event);
   }
   get value() {
     return this.#value;

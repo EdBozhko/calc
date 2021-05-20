@@ -3,6 +3,7 @@ class Display {
   #result = 0;
   #memo;
   #display;
+  #displayContainer;
   #displayMemo;
   #displayResult;
   #container;
@@ -39,18 +40,24 @@ class Display {
   set displayMemo(value) {
     this.#displayMemo = value;
   }
+  get display() {
+    return this.#display;
+  }
   render(container) {
     this.#container = container;
     this.#display = document.createElement("div");
     this.#display.setAttribute("class", "display");
+    this.#displayContainer = document.createElement("div");
+    this.#displayContainer.setAttribute("class", "display-container");
     this.#displayMemo = document.createElement("span");
     this.#displayMemo.setAttribute("class", "display__display-memo");
     this.#displayMemo.innerText = this.#memo;
     this.#displayResult = document.createElement("span");
     this.#displayResult.setAttribute("class", "display__result");
     this.#displayResult.innerText = this.#memo;
-    this.#display.appendChild(this.#displayMemo);
-    this.#display.appendChild(this.#displayResult);
+    this.#displayContainer.appendChild(this.#displayMemo);
+    this.#displayContainer.appendChild(this.#displayResult);
+    this.#display.appendChild(this.#displayContainer);
     this.#container.appendChild(this.#display);
   }
 }

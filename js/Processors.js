@@ -7,20 +7,24 @@ class Processors {
   #stackHistory;
   #onResult;
   #onMemoValue;
+  #calcContainer
   /**
    *
    * @param {Calc} calc
    * @param {()=>{}} onResult
    */
-  constructor(calc, onResult, onMemoValue) {
+  constructor(calc, calcContainer, onResult, onMemoValue) {
     this.#calc = calc; // приинимаем в аргумент и сохраняем ссылку на Calc, который создал процессор
     this.#stack = "0"; // стек для хранения ТЕКУЩЕГО ЗНАЧЕНИЯ, ПОСЛЕДНЕЙ ОПЕРАЦИИ, ИСТОРИЯ ОПЕРАЦИЙ
     this.#stackMemo = [];
     this.#stackHistory = [];
     this.#onMemoValue = onMemoValue;
     this.#onResult = onResult;
+    this.#calcContainer = calcContainer
   }
-
+  get stack() {
+    return this.#stack;
+  }
   onDigitalButtonPress(button) {
     // функция для получения цифровой кнопки, на которой произошел клик
 
@@ -53,9 +57,7 @@ class Processors {
     this.#onResult(this.#stack);
     this.#onMemoValue(this.#stackMemo.join(""));
   }
-  get stack() {
-    return this.#stack;
-  }
+
   onOperationButtonPress(button) {
     // функция для получения операционной кнопки, на которой произошел клик
 

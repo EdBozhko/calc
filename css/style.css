@@ -8,6 +8,11 @@ body {
   font-size: 18px;
 }
 
+label {
+  color: #000000;
+  font-weight: 500;
+}
+
 .main-header {
   margin-bottom: 20px;
   position: sticky;
@@ -29,6 +34,7 @@ body {
 .calculator {
   width: 334px;
   background-color: rgba(0, 0, 0, 0.85);
+  overflow: hidden;
 }
 
 .calculator:hover {

@@ -4,13 +4,14 @@ class Board {
   #equalityButton;
   // #negativeButton;
   #backspaceButton;
-  #dotButton
+  // #dotButton
   #operationsList = ["+", "-", "*", "/"];
   #calc;
   #currentButton;
   #prevButton;
   #container;
   #board;
+  #boardContainer;
   #digitalButton;
   #digitalBoard;
   #operationBoard;
@@ -20,8 +21,8 @@ class Board {
     onDigitalButtonClick,
     onOperationButtonClick,
     onEqualityButtonClick,
-    onNegativeButtonClick,
-    onDotButtonClick,
+    // onNegativeButtonClick,
+    // onDotButtonClick,
     onBackspaceButtonClick
   ) {
     this.#calc = calc;
@@ -45,9 +46,10 @@ class Board {
 
     this.#equalityButton = new EqualityButton(this, onEqualityButtonClick);
     // this.#negativeButton = new NegativeButton(this, onNegativeButtonClick);
-    this.#dotButton = new DotButton(this, onDotButtonClick);
+    // this.#dotButton = new DotButton(this, onDotButtonClick);
     this.#backspaceButton = new BackspaceButton(this, onBackspaceButtonClick);
     this.#currentButton = this.#digitalButtonList[0];
+    this.#prevButton = this.#digitalButtonList[0];
   }
   get digitalButtonList() {
     return this.#digitalButtonList;
@@ -57,13 +59,13 @@ class Board {
   }
   get equalityButton() {
     return this.#equalityButton;
-  }  
+  }
   // get negativeButton() {
   //   return this.#negativeButton;
-  // }  
-  get dotButton() {
-    return this.#dotButton;
-  }
+  // }
+  // get dotButton() {
+  //   return this.#dotButton;
+  // }
   get backspaceButton() {
     return this.#backspaceButton;
   }
@@ -77,10 +79,22 @@ class Board {
   get prevButton() {
     return this.#prevButton;
   }
+  get board() {
+    return this.#board;
+  }
+  get calc() {
+    return this.#calc
+  }
+  get operationsList(){
+    return this.#operationsList
+  }
   render(container) {
     this.#container = container;
     this.#board = document.createElement("div");
     this.#board.setAttribute("class", "board");
+
+    this.#boardContainer = document.createElement("div");
+    this.#boardContainer.setAttribute("class", "board-container");
 
     this.#digitalBoard = document.createElement("div");
     this.#digitalBoard.setAttribute("class", "board__digital-board");
@@ -99,9 +113,10 @@ class Board {
 
     this.#equalityButton.render(this.#operationBoard);
     // this.#negativeButton.render(this.#digitalBoard);
-    this.#dotButton.render(this.#digitalBoard);
-    this.#board.appendChild(this.#digitalBoard);
-    this.#board.appendChild(this.#operationBoard);
+    // this.#dotButton.render(this.#digitalBoard);
+    this.#boardContainer.appendChild(this.#digitalBoard);
+    this.#boardContainer.appendChild(this.#operationBoard);
+    this.#board.appendChild(this.#boardContainer);
 
     this.#container.appendChild(this.#board);
   }

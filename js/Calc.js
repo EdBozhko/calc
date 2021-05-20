@@ -8,10 +8,17 @@ class Calc {
   #processor;
   #container;
   #calc;
-  #calcContainer;
-  constructor() {
+  #calcBox;
+  #calcContainer
+  #index
+  constructor(calcContainer, index) {
+    this.#index = index
+    this.#calcContainer = calcContainer
     this.onDigitalButtonPress = this.onDigitalButtonPress.bind(this); //для варианта с простой функцией, привязываем к calc(без этого функция кнопки передает в this кнопку, а не ссылку на сам калькулятор)
     // инициализируем создание доски с кнопками, процессора и дисплея
+    this.onOperationButtonPress = this.onOperationButtonPress.bind(this)
+    this.onEqualityButtonPress = this.onEqualityButtonPress.bind(this)
+    this.onBackspaceButtonPress = this.onBackspaceButtonPress.bind(this)
     this.#header = new Header(
       this,
       this.onHideButtonPress.bind(this),
@@ -26,7 +33,7 @@ class Calc {
       // this.onDotButtonPress,
       this.onBackspaceButtonPress
     ); // передаем функции отслеживания клика из самого калькулятора в аргументы конструктора class Board
-    this.#processor = new Processors(this, this.onResult, this.onMemoValue);
+    this.#processor = new Processors(this, calcContainer, this.onResult, this.onMemoValue);
     this.#display = new Display(this);
   }
 
@@ -38,20 +45,25 @@ class Calc {
     this.#header.hideButton.hide(this.#board.board);
   }
   onCloseButtonPress(button) {
-    this.#header.closeButton.close(this.#calcContainer);
+    this.#calcContainer.remove(this.#index)
+    this.#header.closeButton.close(this.#calcBox);
   }
-  onDigitalButtonPress(button) {
+  onDigitalButtonPress(button, event) {
     // вариант простой функции
-    this.#processor.onDigitalButtonPress(button); // обращаемся к функции процессора
+    // this.#processor.onDigitalButtonPress(button); // обращаемся к функции процессора
+    this.#calcContainer.onDigitalButtonPress(button, event)
   }
 
   // варианты со стрелочными функциями
-  onOperationButtonPress = (button) => {
-    this.#processor.onOperationButtonPress(button);
+  onOperationButtonPress(button, event) {
+    // this.#processor.onOperationButtonPress(button);
+    this.#calcContainer.onOperationButtonPress(button, event);
   };
 
-  onEqualityButtonPress = (button) => {
-    this.#processor.onEqualityButtonPress(button);
+  onEqualityButtonPress(button, event) {
+    // this.#processor.onEqualityButtonPress(button);
+    this.#calcContainer.onEqualityButtonPress(button, event);
+
   };
   // onNegativeButtonPress = (button) => {
   //   this.#processor.onNegativeButtonPress(button);
@@ -59,8 +71,9 @@ class Calc {
   // onDotButtonPress = (button) => {
   //   this.#processor.onDotButtonPress(button);
   // };
-  onBackspaceButtonPress = (button) => {
-    this.#processor.onBackspaceButtonPress(button);
+  onBackspaceButtonPress(button, event) {
+    // this.#processor.onBackspaceButtonPress(button);
+    this.#calcContainer.onBackspaceButtonPress(button, event);
   };
 
   onResult = (result) => {
@@ -81,17 +94,23 @@ class Calc {
     return this.#display;
   }
 
+  get processor() {
+    return this.#processor
+  }
+get index() {
+  return this.#index
+}
   render(containerId) {
     this.#container = document.getElementById(containerId);
-    this.#calcContainer = document.createElement("div");
-    this.#calcContainer.setAttribute("class", "calculator-container");
+    this.#calcBox = document.createElement("div");
+    this.#calcBox.setAttribute("class", "calculator-container");
     this.#calc = document.createElement("div");
     this.#calc.setAttribute("class", "calculator");
     this.#header.render(this.#calc);
     this.#display.render(this.#calc);
     this.#board.render(this.#calc);
-    this.#calcContainer.appendChild(this.#calc);
-    this.#container.appendChild(this.#calcContainer);
+    this.#calcBox.appendChild(this.#calc);
+    this.#container.appendChild(this.#calcBox);
     this.onResult(this.#processor.stack);
   }
 }

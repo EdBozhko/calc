@@ -1,5 +1,6 @@
 class DigitalButton extends CalcButton {
   #board;
+
   constructor(board, value, onclick) {
     super(board, value, "digital", onclick);
     this.#board = board;
