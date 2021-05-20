@@ -18,6 +18,7 @@ class Toggle {
     this.#toggleLabel.innerText = "Включити синхронний режим";
     this.#toggle = document.createElement("input");
     this.#toggle.setAttribute("type", "checkbox");
+    this.#toggle.checked = this.#sync
     this.#toggle.addEventListener("change", this.toggle.bind(this));
     this.#toggleLabel.appendChild(this.#toggle);
     this.#container.appendChild(this.#toggleLabel);
