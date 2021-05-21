@@ -46,14 +46,21 @@ class Calc {
 
   // -----------------------------
   // функции отслеважиния клика на кнопку в Calc
-
+  hide(element) {
+    element.hasAttribute("hidden")
+      ? (element.hidden = false)
+      : (element.hidden = true);
+  }
+  close(element){
+    element.remove()
+  }
   onHideButtonPress(button) {
-    this.#header.hideButton.hide(this.#display.display);
-    this.#header.hideButton.hide(this.#board.board);
+    this.hide(this.#display.display);
+    this.hide(this.#board.board);
   }
   onCloseButtonPress(button) {
     this.#calcContainer.remove(this.#index);
-    this.#header.closeButton.close(this.#calcBox);
+    this.close(this.#calcBox);
   }
   onDigitalButtonPress(button, event) {
     // вариант простой функции

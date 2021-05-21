@@ -8,7 +8,5 @@ class CloseButton extends CalcButton {
     super.render(container);
     super.button.classList.add("header-calc__close-button");
   }
-  close(element){
-    element.remove()
-  }
+
 }

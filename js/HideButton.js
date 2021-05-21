@@ -8,9 +8,5 @@ class HideButton extends CalcButton {
     super.render(container);
     super.button.classList.add("header-calc__hide-button");
   }
-  hide(element) {
-    element.hasAttribute("hidden")
-      ? (element.hidden = false)
-      : (element.hidden = true);
-  }
+
 }
