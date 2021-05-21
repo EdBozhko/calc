@@ -113,6 +113,14 @@ label {
   align-items: flex-end;
 }
 
+.board__additional-functions-board {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: max-content max-content;
+  gap: 2px;
+  align-self: flex-start;
+}
+
 .board__digital-board {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -120,10 +128,17 @@ label {
   gap: 2px;
 }
 
-.board__digital-board,
-.operation-board {
-  margin-bottom: 5px;
+.board__operation-board {
+  grid-row-start: 1;
+  grid-row-end: 3;
+  grid-column-start: 2;
+  grid-column-end: 3;
 }
+
+/* .board__digital-board,
+.board__operation-board {
+  margin-bottom: 5px;
+} */
 
 .button--digital:nth-child(12) {
   order: 12;
@@ -173,7 +188,7 @@ label {
   order: 11;
 }
 
-.operation-board {
+.board__operation-board {
   display: grid;
   gap: 2px;
 }

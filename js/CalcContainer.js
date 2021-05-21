@@ -71,6 +71,23 @@ class CalcContainer {
       button.board.calc.processor.onOperationButtonPress(button);
     }
   }
+  onClearButtonPress(button, event) {
+    if (this.#toggle.sync) {
+      if (event instanceof CustomEvent) {
+        button.board.calc.processor.onClearButtonPress(button);
+      } else {
+        button.board.calc.processor.onClearButtonPress(button);
+        this.#calcItems.forEach((calc) => {
+          if (calc !== button.board.calc) {
+            const customEvent = new CustomEvent("fakeClick");
+            calc.board.clearButton.onButtonClick(customEvent);
+          }
+        });
+      }
+    } else {
+      button.board.calc.processor.onClearButtonPress(button);
+    }
+  }
   onEqualityButtonPress(button, event) {
     if (this.#toggle.sync) {
       if (event instanceof CustomEvent) {

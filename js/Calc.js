@@ -9,16 +9,17 @@ class Calc {
   #container;
   #calc;
   #calcBox;
-  #calcContainer
-  #index
+  #calcContainer;
+  #index;
   constructor(calcContainer, index) {
-    this.#index = index
-    this.#calcContainer = calcContainer
+    this.#index = index;
+    this.#calcContainer = calcContainer;
     this.onDigitalButtonPress = this.onDigitalButtonPress.bind(this); //для варианта с простой функцией, привязываем к calc(без этого функция кнопки передает в this кнопку, а не ссылку на сам калькулятор)
     // инициализируем создание доски с кнопками, процессора и дисплея
-    this.onOperationButtonPress = this.onOperationButtonPress.bind(this)
-    this.onEqualityButtonPress = this.onEqualityButtonPress.bind(this)
-    this.onBackspaceButtonPress = this.onBackspaceButtonPress.bind(this)
+    this.onOperationButtonPress = this.onOperationButtonPress.bind(this);
+    this.onEqualityButtonPress = this.onEqualityButtonPress.bind(this);
+    this.onBackspaceButtonPress = this.onBackspaceButtonPress.bind(this);
+    this.onClearButtonPress = this.onClearButtonPress.bind(this);
     this.#header = new Header(
       this,
       this.onHideButtonPress.bind(this),
@@ -29,11 +30,17 @@ class Calc {
       this.onDigitalButtonPress,
       this.onOperationButtonPress,
       this.onEqualityButtonPress,
+      this.onBackspaceButtonPress,
+      this.onClearButtonPress,
       // this.onNegativeButtonPress,
       // this.onDotButtonPress,
-      this.onBackspaceButtonPress
     ); // передаем функции отслеживания клика из самого калькулятора в аргументы конструктора class Board
-    this.#processor = new Processors(this, calcContainer, this.onResult, this.onMemoValue);
+    this.#processor = new Processors(
+      this,
+      calcContainer,
+      this.onResult,
+      this.onMemoValue
+    );
     this.#display = new Display(this);
   }
 
@@ -45,26 +52,29 @@ class Calc {
     this.#header.hideButton.hide(this.#board.board);
   }
   onCloseButtonPress(button) {
-    this.#calcContainer.remove(this.#index)
+    this.#calcContainer.remove(this.#index);
     this.#header.closeButton.close(this.#calcBox);
   }
   onDigitalButtonPress(button, event) {
     // вариант простой функции
     // this.#processor.onDigitalButtonPress(button); // обращаемся к функции процессора
-    this.#calcContainer.onDigitalButtonPress(button, event)
+    this.#calcContainer.onDigitalButtonPress(button, event);
   }
 
   // варианты со стрелочными функциями
   onOperationButtonPress(button, event) {
     // this.#processor.onOperationButtonPress(button);
     this.#calcContainer.onOperationButtonPress(button, event);
-  };
+  }
+
+  onClearButtonPress(button, event) {
+    this.#calcContainer.onClearButtonPress(button, event);
+  }
 
   onEqualityButtonPress(button, event) {
     // this.#processor.onEqualityButtonPress(button);
     this.#calcContainer.onEqualityButtonPress(button, event);
-
-  };
+  }
   // onNegativeButtonPress = (button) => {
   //   this.#processor.onNegativeButtonPress(button);
   // };
@@ -74,7 +84,7 @@ class Calc {
   onBackspaceButtonPress(button, event) {
     // this.#processor.onBackspaceButtonPress(button);
     this.#calcContainer.onBackspaceButtonPress(button, event);
-  };
+  }
 
   onResult = (result) => {
     this.#display.result = result;
@@ -95,11 +105,11 @@ class Calc {
   }
 
   get processor() {
-    return this.#processor
+    return this.#processor;
   }
-get index() {
-  return this.#index
-}
+  get index() {
+    return this.#index;
+  }
   render(containerId) {
     this.#container = document.getElementById(containerId);
     this.#calcBox = document.createElement("div");

@@ -7,7 +7,7 @@ class Processors {
   #stackHistory;
   #onResult;
   #onMemoValue;
-  #calcContainer
+  #calcContainer;
   /**
    *
    * @param {Calc} calc
@@ -20,7 +20,7 @@ class Processors {
     this.#stackHistory = [];
     this.#onMemoValue = onMemoValue;
     this.#onResult = onResult;
-    this.#calcContainer = calcContainer
+    this.#calcContainer = calcContainer;
   }
   get stack() {
     return this.#stack;
@@ -31,10 +31,7 @@ class Processors {
     console.log(button);
     console.log(`button value ${button.value}`);
 
-    if (
-
-      this.#calc.board.prevButton.type === "equality"
-    ) {
+    if (this.#calc.board.prevButton.type === "equality") {
       this.#stackMemo.length = 0;
       this.#stack = button.value;
       this.#stackMemo.push(this.#stack);
@@ -66,7 +63,6 @@ class Processors {
     if (this.#calc.board.prevButton.type === "operation") {
       this.#stackMemo.pop();
       this.#stackMemo.push(button.value); // к текущему значению прибавляется значение кнопки, на которой произошел клик
-
     } else {
       if (this.#calc.board.prevButton.type === "equality") {
         this.#stackMemo.length = 0;
@@ -82,6 +78,13 @@ class Processors {
     this.#onMemoValue(this.#stackMemo.join(""));
   }
 
+  onClearButtonPress(button) {
+    this.#stackMemo.length = 0;
+    this.#stack = this.#calc.board.digitalButtonList[0].value;
+    this.#onResult(this.#stack);
+    this.#onMemoValue(this.#stackMemo.join(""));
+  }
+
   onEqualityButtonPress(button) {
     // функция для получения кнопки равенства, на которой произошел клик
 
@@ -89,12 +92,11 @@ class Processors {
     console.log(`button value ${button.value}`);
     this.#stack = eval(this.#stackMemo.join("")).toString();
     if (isNaN(this.#stack)) {
-      this.#stack = "Результат не определен"
+      this.#stack = "Результат не определен";
       this.#stackMemo.length = 0;
     } else {
       this.#stackMemo.push(button.value); // к текущему значению прибавляется значение кнопки, на которой произошел клик
       this.#stackHistory.push(this.#stackMemo.join("") + this.#stack);
-      
     }
     console.log(`stack ${this.#stack}`);
     console.log(`stack memo ${this.#stackMemo}`);
@@ -106,7 +108,7 @@ class Processors {
   // onNegativeButtonPress(button) {
 
   // }
-  
+
   // onDotButtonPress(button) {
 
   // }
@@ -115,14 +117,15 @@ class Processors {
     console.log(button);
     console.log(`button value ${button.value}`);
 
-      if (this.#calc.board.prevButton.type === "equality") {
-        this.#stackMemo.length = 0;
-      } else {
-        
-        this.#stack = this.#stack.slice(0, -1);
-        this.#stackMemo.pop();
-        if (this.#stackMemo.length === 0 && this.#stack.length === 0) {this.#stack = this.#calc.board.digitalButtonList[0].value}
+    if (this.#calc.board.prevButton.type === "equality") {
+      this.#stackMemo.length = 0;
+    } else {
+      this.#stack = this.#stack.slice(0, -1);
+      this.#stackMemo.pop();
+      if (this.#stackMemo.length === 0 && this.#stack.length === 0) {
+        this.#stack = this.#calc.board.digitalButtonList[0].value;
       }
+    }
 
     console.log(`stack ${this.#stack}`);
     console.log(`stack memo ${this.#stackMemo}`);
