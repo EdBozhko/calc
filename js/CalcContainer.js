@@ -35,7 +35,7 @@ class CalcContainer {
     this.#calcItems.set(this.#index, this.#newCalc);
     this.#newCalc.render(containerId);
   }
-  remove(index) {
+  delete(index) {
     this.#calcItems.delete(index);
   }
 

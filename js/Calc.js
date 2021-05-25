@@ -21,26 +21,29 @@ class Calc {
     this.onBackspaceButtonPress = this.onBackspaceButtonPress.bind(this);
     this.onClearButtonPress = this.onClearButtonPress.bind(this);
     this.#header = new Header(this.#calcContainer, this, this.onHideButtonPress.bind(this), this.onCloseButtonPress.bind(this));
-    this.#board = new Board(this.#calcContainer, this, this.onDigitalButtonPress, this.onOperationButtonPress, this.onEqualityButtonPress, this.onBackspaceButtonPress, this.onClearButtonPress,/* this.onNegativeButtonPress, this.onDotButtonPress,*/);
+    this.#board = new Board(
+      this.#calcContainer,
+      this,
+      this.onDigitalButtonPress,
+      this.onOperationButtonPress,
+      this.onEqualityButtonPress,
+      this.onBackspaceButtonPress,
+      this.onClearButtonPress /* this.onNegativeButtonPress, this.onDotButtonPress,*/,
+    );
     this.#processor = new Processors(this, this.onResult, this.onMemoValue);
     this.#display = new Display(this);
   }
 
   // -----------------------------
   // функции отслеважиния клика на кнопку в Calc
-  hide(element) {
-    element.hasAttribute('hidden') ? (element.hidden = false) : (element.hidden = true);
-  }
-  close(element) {
-    element.remove();
-  }
+
   onHideButtonPress(button) {
-    this.hide(this.#display.display);
-    this.hide(this.#board.board);
+    this.#display.display.hasAttribute('hidden') ? (this.#display.display.hidden = false) : (this.#display.display.hidden = true);
+    this.#board.board.hasAttribute('hidden') ? (this.#board.board.hidden = false) : (this.#board.board.hidden = true);
   }
   onCloseButtonPress(button) {
-    this.#calcContainer.remove(this.#index);
-    this.close(this.#calcBox);
+    this.#calcContainer.delete(this.#index);
+    this.#calcBox.remove();
   }
   onDigitalButtonPress(button, event) {
     // вариант простой функции
