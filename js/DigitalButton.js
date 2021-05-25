@@ -1,9 +1,11 @@
 class DigitalButton extends CalcButton {
   #board;
-
-  constructor(board, value, onclick) {
-    super(board, value, "digital", onclick);
+  #calContainer;
+  constructor(calcContainer, board, value, onclick) {
+    super(calcContainer, board, value, "digital", onclick);
     this.#board = board;
+    this.#calContainer = calcContainer;
+
     if (isNaN(value)) {
       console.error("the value is not a number");
     } else if (/^[0-9]$/.test(value)) {

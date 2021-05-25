@@ -1,8 +1,11 @@
 class NegativeButton extends CalcButton {
   #board;
-  constructor(board, onclick) {
-    super(board, "±", "negative", onclick);
+  #calContainer
+  constructor(calcContainer, board, onclick) {
+    super(calcContainer, board, "±", "negative", onclick);
     this.#board = board;
+    this.#calContainer = calcContainer
+
   }
   render(container) {
     super.render(container);

@@ -1,8 +1,9 @@
 class OperationButton extends CalcButton {
   #board;
-  constructor(board, value, onclick) {
-    super(board, value, "operation", onclick);
-    this.#board = board;
+  #calContainer;
+  constructor(calcContainer, board, value, onclick) {
+    super(calcContainer, board, value, "operation", onclick);
+    this.#calContainer = calcContainer;
   }
   render(container) {
     super.render(container);

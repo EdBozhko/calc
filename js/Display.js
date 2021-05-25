@@ -7,7 +7,7 @@ class Display {
   #displayMemo;
   #displayResult;
   #container;
-  constructor(calc, value, memoValue = "") {
+  constructor(calc, value, memoValue = '') {
     this.#calc = calc;
     this.#result = value;
     this.#memo = memoValue;
@@ -18,7 +18,6 @@ class Display {
   }
   set result(value) {
     this.#result = value;
-    console.log(`display result ${this.#result}`);
   }
 
   get memoValue() {
@@ -26,7 +25,6 @@ class Display {
   }
   set memoValue(value) {
     this.#memo = value;
-    console.log(`display memo ${this.#memo}`);
   }
   get displayResult() {
     return this.#displayResult;
@@ -45,15 +43,15 @@ class Display {
   }
   render(container) {
     this.#container = container;
-    this.#display = document.createElement("div");
-    this.#display.setAttribute("class", "display");
-    this.#displayContainer = document.createElement("div");
-    this.#displayContainer.setAttribute("class", "display-container");
-    this.#displayMemo = document.createElement("span");
-    this.#displayMemo.setAttribute("class", "display__display-memo");
+    this.#display = document.createElement('div');
+    this.#display.setAttribute('class', 'display');
+    this.#displayContainer = document.createElement('div');
+    this.#displayContainer.setAttribute('class', 'display-container');
+    this.#displayMemo = document.createElement('span');
+    this.#displayMemo.setAttribute('class', 'display__display-memo');
     this.#displayMemo.innerText = this.#memo;
-    this.#displayResult = document.createElement("span");
-    this.#displayResult.setAttribute("class", "display__result");
+    this.#displayResult = document.createElement('span');
+    this.#displayResult.setAttribute('class', 'display__result');
     this.#displayResult.innerText = this.#memo;
     this.#displayContainer.appendChild(this.#displayMemo);
     this.#displayContainer.appendChild(this.#displayResult);

@@ -6,10 +6,12 @@ class Header {
   #header;
   #container;
   #calcName;
-  constructor(calc, onHideButtonClick, onCloseButtonClick) {
+  #calcContainer;
+  constructor(calcContainer, calc, onHideButtonClick, onCloseButtonClick) {
+    this.#calcContainer = calcContainer;
     this.#calc = calc;
-    this.#hideButton = new HideButton(this, onHideButtonClick);
-    this.#closeButton = new CloseButton(this, onCloseButtonClick);
+    this.#hideButton = new HideButton(this.#calcContainer, this, onHideButtonClick);
+    this.#closeButton = new CloseButton(this.#calcContainer, this, onCloseButtonClick);
   }
   get hideButton() {
     return this.#hideButton;
@@ -19,16 +21,13 @@ class Header {
   }
   render(container) {
     this.#container = container;
-    this.#header = document.createElement("header");
-    this.#header.setAttribute("class", "header-calc");
-    this.#calcName = document.createElement("span");
-    this.#calcName.setAttribute("class", "header-calc__calc-name");
-    this.#calcName.innerText = "Калькулятор";
-    this.#actionButtonsList = document.createElement("div");
-    this.#actionButtonsList.setAttribute(
-      "class",
-      "header-calc__action-buttons-list"
-    );
+    this.#header = document.createElement('header');
+    this.#header.setAttribute('class', 'header-calc');
+    this.#calcName = document.createElement('span');
+    this.#calcName.setAttribute('class', 'header-calc__calc-name');
+    this.#calcName.innerText = 'Калькулятор';
+    this.#actionButtonsList = document.createElement('div');
+    this.#actionButtonsList.setAttribute('class', 'header-calc__action-buttons-list');
     this.#hideButton.render(this.#actionButtonsList);
     this.#closeButton.render(this.#actionButtonsList);
     this.#header.appendChild(this.#calcName);

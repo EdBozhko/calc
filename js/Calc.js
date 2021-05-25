@@ -20,39 +20,19 @@ class Calc {
     this.onEqualityButtonPress = this.onEqualityButtonPress.bind(this);
     this.onBackspaceButtonPress = this.onBackspaceButtonPress.bind(this);
     this.onClearButtonPress = this.onClearButtonPress.bind(this);
-    this.#header = new Header(
-      this,
-      this.onHideButtonPress.bind(this),
-      this.onCloseButtonPress.bind(this)
-    );
-    this.#board = new Board(
-      this,
-      this.onDigitalButtonPress,
-      this.onOperationButtonPress,
-      this.onEqualityButtonPress,
-      this.onBackspaceButtonPress,
-      this.onClearButtonPress,
-      // this.onNegativeButtonPress,
-      // this.onDotButtonPress,
-    ); // передаем функции отслеживания клика из самого калькулятора в аргументы конструктора class Board
-    this.#processor = new Processors(
-      this,
-      calcContainer,
-      this.onResult,
-      this.onMemoValue
-    );
+    this.#header = new Header(this.#calcContainer, this, this.onHideButtonPress.bind(this), this.onCloseButtonPress.bind(this));
+    this.#board = new Board(this.#calcContainer, this, this.onDigitalButtonPress, this.onOperationButtonPress, this.onEqualityButtonPress, this.onBackspaceButtonPress, this.onClearButtonPress,/* this.onNegativeButtonPress, this.onDotButtonPress,*/);
+    this.#processor = new Processors(this, this.onResult, this.onMemoValue);
     this.#display = new Display(this);
   }
 
   // -----------------------------
   // функции отслеважиния клика на кнопку в Calc
   hide(element) {
-    element.hasAttribute("hidden")
-      ? (element.hidden = false)
-      : (element.hidden = true);
+    element.hasAttribute('hidden') ? (element.hidden = false) : (element.hidden = true);
   }
-  close(element){
-    element.remove()
+  close(element) {
+    element.remove();
   }
   onHideButtonPress(button) {
     this.hide(this.#display.display);
@@ -119,10 +99,10 @@ class Calc {
   }
   render(containerId) {
     this.#container = document.getElementById(containerId);
-    this.#calcBox = document.createElement("div");
-    this.#calcBox.setAttribute("class", "calculator-container");
-    this.#calc = document.createElement("div");
-    this.#calc.setAttribute("class", "calculator");
+    this.#calcBox = document.createElement('div');
+    this.#calcBox.setAttribute('class', 'calculator-container');
+    this.#calc = document.createElement('div');
+    this.#calc.setAttribute('class', 'calculator');
     this.#header.render(this.#calc);
     this.#display.render(this.#calc);
     this.#board.render(this.#calc);
