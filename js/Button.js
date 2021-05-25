@@ -4,17 +4,16 @@ class Button {
   #onclick;
   #container;
   #button;
-  #calcContainer;
-  constructor(calcContainer, value, type, onclick) {
+  #calc;
+  constructor(calc, value, type, onclick) {
     this.#value = value;
     this.#type = type;
     this.#onclick = onclick;
-    this.#calcContainer = calcContainer;
+    this.#calc = calc;
   }
 
   onButtonClick(event) {
     this.#onclick(this, event);
-    this.#calcContainer.onHistory(this);
   }
   get value() {
     return this.#value;

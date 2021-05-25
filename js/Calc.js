@@ -11,6 +11,7 @@ class Calc {
   #calcBox;
   #calcContainer;
   #index;
+  #history = [];
   constructor(calcContainer, index) {
     this.#index = index;
     this.#calcContainer = calcContainer;
@@ -20,7 +21,7 @@ class Calc {
     this.onEqualityButtonPress = this.onEqualityButtonPress.bind(this);
     this.onBackspaceButtonPress = this.onBackspaceButtonPress.bind(this);
     this.onClearButtonPress = this.onClearButtonPress.bind(this);
-    this.#header = new Header(this.#calcContainer, this, this.onHideButtonPress.bind(this), this.onCloseButtonPress.bind(this));
+    this.#header = new Header(this, this.onHideButtonPress.bind(this), this.onCloseButtonPress.bind(this));
     this.#board = new Board(
       this.#calcContainer,
       this,
@@ -36,6 +37,10 @@ class Calc {
 
   // -----------------------------
   // функции отслеважиния клика на кнопку в Calc
+  onHistory(button) {
+    this.#history.push(button);
+    console.log(this.#history);
+  }
 
   onHideButtonPress(button) {
     this.#display.display.hasAttribute('hidden') ? (this.#display.display.hidden = false) : (this.#display.display.hidden = true);

@@ -5,7 +5,6 @@ class CalcContainer {
   #index = 0;
   #toggle;
   #newCalc;
-  #history = [];
   constructor(buttonContainer, toggleContainer, containerId) {
     this.#calcItems = new Map();
     this.#calcContainer = this;
@@ -25,10 +24,7 @@ class CalcContainer {
   get toggle() {
     return this.#toggle;
   }
-  onHistory(button) {
-    this.#history.push(button);
-    console.log(this.#history);
-  }
+
   add(containerId) {
     this.#index++;
     this.#newCalc = new Calc(this, this.#index);

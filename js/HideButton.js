@@ -1,13 +1,14 @@
-class HideButton extends CalcButton {
+class HideButton extends Button {
+  #calc;
   #header;
-  #calContainer;
-  constructor(calcContainer, board, onclick) {
-    super(calcContainer, board, "—", "hide", onclick);
-    this.#header = board;
-    this.#calContainer = calcContainer;
+  constructor(calc, header, onclick) {
+    super(calc, '—', 'hide', onclick);
+    this.#calc = calc;
+    this.#header = header;
   }
+
   render(container) {
     super.render(container);
-    super.button.classList.add("header-calc__hide-button");
+    super.button.classList.add('header-calc__hide-button');
   }
 }

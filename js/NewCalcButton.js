@@ -8,6 +8,5 @@ class NewCalcButton extends Button {
   }
   onButtonClick(event) {
     this.#calcContainer.add(this.#containerId);
-    this.#calcContainer.onHistory(this);
   }
 }

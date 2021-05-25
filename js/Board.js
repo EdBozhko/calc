@@ -23,16 +23,16 @@ class Board {
     this.#calcContainer = calcContainer;
     this.#calc = calc;
     for (let i = 0; i < 10; i++) {
-      this.#digitalButton = new DigitalButton(this.#calcContainer, this, i.toString(), onDigitalButtonClick);
+      this.#digitalButton = new DigitalButton(this.#calc, this, i.toString(), onDigitalButtonClick);
       this.#digitalButtonList.push(this.#digitalButton);
     }
     for (let l = 0; l < this.#operationsList.length; l++) {
-      this.#operationButton = new OperationButton(this.#calcContainer, this, this.#operationsList[l], onOperationButtonClick);
+      this.#operationButton = new OperationButton(this.#calc, this, this.#operationsList[l], onOperationButtonClick);
       this.#operationButtonList.push(this.#operationButton);
     }
-    this.#equalityButton = new EqualityButton(this.#calcContainer, this, onEqualityButtonClick);
-    this.#backspaceButton = new BackspaceButton(this.#calcContainer, this, onBackspaceButtonClick);
-    this.#clearButton = new ClearButton(this.#calcContainer, this, onClearButtonClick);
+    this.#equalityButton = new EqualityButton(this.#calc, this, onEqualityButtonClick);
+    this.#backspaceButton = new BackspaceButton(this.#calc, this, onBackspaceButtonClick);
+    this.#clearButton = new ClearButton(this.#calc, this, onClearButtonClick);
     // this.#negativeButton = new NegativeButton(this, onNegativeButtonClick);
     // this.#dotButton = new DotButton(this, onDotButtonClick);
     this.#currentButton = this.#digitalButtonList[0];

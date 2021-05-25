@@ -1,10 +1,10 @@
 class CalcButton extends Button {
   #board;
-  #calContainer;
-  constructor(calcContainer, board, value, type, onclick) {
-    super(calcContainer, value, type, onclick);
+  #calc;
+  constructor(calc, board, value, type, onclick) {
+    super(calc, value, type, onclick);
     this.#board = board;
-    this.#calContainer = calcContainer;
+    this.#calc = calc;
   }
   get board() {
     return this.#board;
@@ -12,5 +12,6 @@ class CalcButton extends Button {
   onButtonClick(event) {
     this.#board.currentButton = this;
     super.onButtonClick(event);
+    this.#calc.onHistory(this);
   }
 }

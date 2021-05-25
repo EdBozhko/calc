@@ -6,12 +6,10 @@ class Header {
   #header;
   #container;
   #calcName;
-  #calcContainer;
-  constructor(calcContainer, calc, onHideButtonClick, onCloseButtonClick) {
-    this.#calcContainer = calcContainer;
+  constructor(calc, onHideButtonClick, onCloseButtonClick) {
     this.#calc = calc;
-    this.#hideButton = new HideButton(this.#calcContainer, this, onHideButtonClick);
-    this.#closeButton = new CloseButton(this.#calcContainer, this, onCloseButtonClick);
+    this.#hideButton = new HideButton(this.#calc, this, onHideButtonClick);
+    this.#closeButton = new CloseButton(this.#calc, this, onCloseButtonClick);
   }
   get hideButton() {
     return this.#hideButton;

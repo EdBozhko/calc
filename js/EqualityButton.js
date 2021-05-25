@@ -1,10 +1,10 @@
 class EqualityButton extends CalcButton {
   #board;
-  #calContainer;
-  constructor(calcContainer, board, onclick) {
-    super(calcContainer, board, "=", "equality", onclick);
+  #calc;
+  constructor(calc, board, onclick) {
+    super(calc, board, "=", "equality", onclick);
     this.#board = board;
-    this.#calContainer = calcContainer;
+    this.#calc = calc;
   }
   render(container) {
     super.render(container);
