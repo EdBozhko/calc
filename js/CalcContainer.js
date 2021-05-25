@@ -17,6 +17,7 @@ class CalcContainer {
     this.onEqualityButtonPress = this.onEqualityButtonPress.bind(this);
     this.onBackspaceButtonPress = this.onBackspaceButtonPress.bind(this);
     this.onClearButtonPress = this.onClearButtonPress.bind(this);
+    this.onDotButtonPress = this.onDotButtonPress.bind(this);
   }
   get calcContainer() {
     return this.#calcContainer;
@@ -61,6 +62,11 @@ class CalcContainer {
   onOperationButtonPress(button, event) {
     this.syncMode(button, event, button.board.calc.processor.onOperationButtonPress, (calc, button, customEvent) => {
       calc.board.operationButtonList[button.board.operationsList.indexOf(button.value)].onButtonClick(customEvent);
+    });
+  }
+  onDotButtonPress(button, event) {
+    this.syncMode(button, event, button.board.calc.processor.onDotButtonPress, (calc, button, customEvent) => {
+      calc.board.dotButton.onButtonClick(customEvent);
     });
   }
   onClearButtonPress(button, event) {

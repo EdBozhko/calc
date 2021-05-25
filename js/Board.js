@@ -3,7 +3,7 @@ class Board {
   #operationButtonList = [];
   #equalityButton;
   // #negativeButton;
-  // #dotButton
+  #dotButton
   #clearButton;
   #backspaceButton;
   #operationsList = ['+', '-', '*', '/'];
@@ -19,7 +19,7 @@ class Board {
   #additionalFunctionsBoard;
   #operationButton;
   #calcContainer;
-  constructor(calcContainer, calc, onDigitalButtonClick, onOperationButtonClick, onEqualityButtonClick, onBackspaceButtonClick, onClearButtonClick /* onNegativeButtonClick, onDotButtonClick,*/) {
+  constructor(calcContainer, calc, onDigitalButtonClick, onOperationButtonClick, onEqualityButtonClick, onBackspaceButtonClick, onClearButtonClick, onDotButtonClick /* onNegativeButtonClick, ,*/) {
     this.#calcContainer = calcContainer;
     this.#calc = calc;
     for (let i = 0; i < 10; i++) {
@@ -34,7 +34,7 @@ class Board {
     this.#backspaceButton = new BackspaceButton(this.#calc, this, onBackspaceButtonClick);
     this.#clearButton = new ClearButton(this.#calc, this, onClearButtonClick);
     // this.#negativeButton = new NegativeButton(this, onNegativeButtonClick);
-    // this.#dotButton = new DotButton(this, onDotButtonClick);
+    this.#dotButton = new DotButton(this.#calc, this, onDotButtonClick);
     this.#currentButton = this.#digitalButtonList[0];
     this.#prevButton = this.#digitalButtonList[0];
   }
@@ -53,9 +53,9 @@ class Board {
   // get negativeButton() {
   //   return this.#negativeButton;
   // }
-  // get dotButton() {
-  //   return this.#dotButton;
-  // }
+  get dotButton() {
+    return this.#dotButton;
+  }
   get backspaceButton() {
     return this.#backspaceButton;
   }
@@ -100,7 +100,7 @@ class Board {
     this.#equalityButton.render(this.#operationBoard);
     this.#clearButton.render(this.#additionalFunctionsBoard);
     // this.#negativeButton.render(this.#digitalBoard);
-    // this.#dotButton.render(this.#digitalBoard);
+    this.#dotButton.render(this.#digitalBoard);
     this.#boardContainer.appendChild(this.#additionalFunctionsBoard);
     this.#boardContainer.appendChild(this.#digitalBoard);
     this.#boardContainer.appendChild(this.#operationBoard);

@@ -21,6 +21,7 @@ class Calc {
     this.onEqualityButtonPress = this.onEqualityButtonPress.bind(this);
     this.onBackspaceButtonPress = this.onBackspaceButtonPress.bind(this);
     this.onClearButtonPress = this.onClearButtonPress.bind(this);
+    this.onDotButtonPress = this.onDotButtonPress.bind(this);
     this.#header = new Header(this, this.onHideButtonPress.bind(this), this.onCloseButtonPress.bind(this));
     this.#board = new Board(
       this.#calcContainer,
@@ -29,7 +30,8 @@ class Calc {
       this.onOperationButtonPress,
       this.onEqualityButtonPress,
       this.onBackspaceButtonPress,
-      this.onClearButtonPress /* this.onNegativeButtonPress, this.onDotButtonPress,*/,
+      this.onClearButtonPress,
+      this.onDotButtonPress /* this.onNegativeButtonPress, */,
     );
     this.#processor = new Processors(this, this.onResult, this.onMemoValue);
     this.#display = new Display(this);
@@ -73,9 +75,10 @@ class Calc {
   // onNegativeButtonPress = (button) => {
   //   this.#processor.onNegativeButtonPress(button);
   // };
-  // onDotButtonPress = (button) => {
-  //   this.#processor.onDotButtonPress(button);
-  // };
+  onDotButtonPress(button, event) {
+    // this.#processor.onDotButtonPress(button);
+    this.#calcContainer.onDotButtonPress(button, event);
+  }
   onBackspaceButtonPress(button, event) {
     // this.#processor.onBackspaceButtonPress(button);
     this.#calcContainer.onBackspaceButtonPress(button, event);
