@@ -12,6 +12,7 @@ class Calc {
   #calcContainer;
   #index;
   #history = [];
+  #replayHistory = [];
   constructor(calcContainer, index) {
     this.#index = index;
     this.#calcContainer = calcContainer;
@@ -22,7 +23,7 @@ class Calc {
     this.onBackspaceButtonPress = this.onBackspaceButtonPress.bind(this);
     this.onClearButtonPress = this.onClearButtonPress.bind(this);
     this.onDotButtonPress = this.onDotButtonPress.bind(this);
-    this.#header = new Header(this, this.onHideButtonPress.bind(this), this.onCloseButtonPress.bind(this));
+    this.#header = new Header(this, this.onReplayButtonPress.bind(this), this.onHideButtonPress.bind(this), this.onCloseButtonPress.bind(this));
     this.#board = new Board(
       this.#calcContainer,
       this,
@@ -35,15 +36,54 @@ class Calc {
     );
     this.#processor = new Processors(this, this.onResult, this.onMemoValue);
     this.#display = new Display(this);
+    this.replayOne = this.replayOne.bind(this);
   }
 
   // -----------------------------
   // функции отслеважиния клика на кнопку в Calc
   onHistory(button) {
     this.#history.push(button);
-    console.log(this.#history);
+  }
+  replayOne(array) {
+    if (array.length === 0 ) {
+      return this.#header.replayButton.button.disabled = false
+    }
+    array[0].onButtonClick();
+    array.splice(0, 1);
+    setTimeout(() => this.replayOne(array), 1000);
   }
 
+  onReplayButtonPress() {
+    this.#header.replayButton.button.disabled = true
+    this.#replayHistory = [...this.#history];
+
+    this.#history.length = 0;
+
+    this.onClearButtonPress(this);
+    setTimeout(() => {
+
+      this.replayOne(this.#replayHistory);
+    }, 1000);
+    // this.#replayHistory.forEach((button) => setTimeout(() => button.onButtonClick(), 3000));
+
+    // this.#replayHistory.forEach((button) => setTimeout(function tick() {
+    //   button.onButtonClick()
+    //   setTimeout(tick, 3000)
+    // }, 3000));
+
+    //     do {
+    // setTimeout(function replayOne(){
+    //   this.#replayHistory[0].onButtonClick();
+    //   console.log(this.#replayHistory[0]);
+    //   this.#replayHistory.splice(0, 1);
+    //   setTimeout(replayOne, 3000)
+    // },3000)
+
+    //       // setTimeout(this.#replayHistory[0].onButtonClick(),3000)
+    //       // console.log(this.#replayHistory[0]);
+    //       // this.#replayHistory.splice(0, 1);
+    //     } while (this.#replayHistory.length > 0);
+  }
   onHideButtonPress(button) {
     this.#display.display.hasAttribute('hidden') ? (this.#display.display.hidden = false) : (this.#display.display.hidden = true);
     this.#board.board.hasAttribute('hidden') ? (this.#board.board.hidden = false) : (this.#board.board.hidden = true);
