@@ -1,6 +1,6 @@
 class Display {
   #calc;
-  #result = 0;
+  #result;
   #memo;
   #display;
   #displayContainer;

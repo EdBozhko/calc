@@ -13,7 +13,7 @@ class Calc {
   #index;
   #history = [];
   #replayHistory = [];
-  #calcHiddenToggle;
+  #calcHidden;
   constructor(calcContainer, index) {
     this.#index = index;
     this.#calcContainer = calcContainer;
@@ -24,7 +24,10 @@ class Calc {
     this.onBackspaceButtonPress = this.onBackspaceButtonPress.bind(this);
     this.onClearButtonPress = this.onClearButtonPress.bind(this);
     this.onDotButtonPress = this.onDotButtonPress.bind(this);
+    this.replayOne = this.replayOne.bind(this);
+    this.#calcHidden = false;
     this.#header = new Header(this, this.onReplayButtonPress.bind(this), this.onHideButtonPress.bind(this), this.onCloseButtonPress.bind(this));
+    this.#processor = new Processors(this, this.onResult, this.onMemoValue);
     this.#board = new Board(
       this.#calcContainer,
       this,
@@ -34,11 +37,8 @@ class Calc {
       this.onBackspaceButtonPress,
       this.onClearButtonPress,
       this.onDotButtonPress /* this.onNegativeButtonPress, */,
-    );
-    this.#processor = new Processors(this, this.onResult, this.onMemoValue);
-    this.#display = new Display(this);
-    this.replayOne = this.replayOne.bind(this);
-    this.#calcHiddenToggle = false;
+      );
+      this.#display = new Display(this);
   }
 
   // -----------------------------
@@ -46,16 +46,20 @@ class Calc {
   onHistory(button) {
     this.#history.push(button);
   }
-  replayOne(array) {
+  replayOne(array, onComplete) {
     if (array.length === 0) {
-      return (this.#header.replayButton.button.disabled = false);
+      onComplete();
+      return;
     }
     array[0].onButtonClick();
     array.splice(0, 1);
-    setTimeout(() => this.replayOne(array), 1000);
+    setTimeout(() => this.replayOne(array, onComplete), 1000);
   }
 
   onReplayButtonPress() {
+    if (this.#header.replayButton.button.disabled) {
+      return;
+    }
     this.#header.replayButton.button.disabled = true;
     this.#replayHistory = [...this.#history];
 
@@ -63,13 +67,27 @@ class Calc {
 
     this.onClearButtonPress(this);
     setTimeout(() => {
-      this.replayOne(this.#replayHistory);
+      this.replayOne(this.#replayHistory, () => {
+        this.#header.replayButton.button.disabled = false;
+      });
     }, 1000);
   }
+  hideCalc(){
+    this.#calcHidden = true
+    this.#display.display.hidden = true;
+    this.#board.board.hidden = true;
+  }
+  unHideCalc(){
+    this.#calcHidden = false
+    this.#display.display.hidden = false;
+    this.#board.board.hidden = false;
+  }
   onHideButtonPress(button) {
-    this.#calcHiddenToggle = !this.#calcHiddenToggle;
-    this.#display.display.hidden = this.#calcHiddenToggle;
-    this.#board.board.hidden = this.#calcHiddenToggle;
+    if (this.#calcHidden) {
+      this.unHideCalc()
+    } else {
+      this.hideCalc()
+    }
   }
   onCloseButtonPress(button) {
     this.#calcContainer.delete(this.#index);

@@ -14,7 +14,7 @@ class Processors {
    */
   constructor(calc, onResult, onMemoValue) {
     this.#calc = calc; // приинимаем в аргумент и сохраняем ссылку на Calc, который создал процессор
-    this.#stack = '0'; // стек для хранения ТЕКУЩЕГО ЗНАЧЕНИЯ, ПОСЛЕДНЕЙ ОПЕРАЦИИ, ИСТОРИЯ ОПЕРАЦИЙ
+    this.#stack = []; // стек для хранения ТЕКУЩЕГО ЗНАЧЕНИЯ, ПОСЛЕДНЕЙ ОПЕРАЦИИ, ИСТОРИЯ ОПЕРАЦИЙ
     this.#stackMemo = [];
     this.#stackHistory = [];
     this.#onMemoValue = onMemoValue;
@@ -32,63 +32,67 @@ class Processors {
   onDigitalButtonPress(button) {
     // функция для получения цифровой кнопки, на которой произошел клик
 
-    if (this.#calc.board.prevButton.type === 'equality' || (this.#stack === '0' && this.#stackMemo[0] === '0')) {
+    if (this.#calc.board.prevButton.type === 'equality' || (this.#calc.board.prevButton.type === 'backspace' && this.#stackMemo.length === 0)) {
       this.#stackMemo.length = 0;
-      this.#stack = button.value;
-      this.#stackMemo.push(this.#stack);
+      this.#stack.length = 0;
+      this.#stack.push(button.value);
     } else {
-      if (this.#stack === '0' || this.#calc.board.prevButton.type === 'operation') {
-        this.#stack = button.value;
-        this.#stackMemo.push(this.#stack);
+      if ((this.#stack[0] === '0' && this.#stack.length === 1) || this.#calc.board.prevButton.type === 'operation') {
+        this.#stack.length = 0;
+        this.#stack.push(button.value);
       } else {
-        this.#stack = this.#stack + button.value;
-        this.#stackMemo.push(button.value);
+        this.#stack.push(button.value);
       }
     }
 
-    this.#onResult(this.#stack);
+    this.#onResult(this.#stack.join(''));
     this.#onMemoValue(this.#stackMemo.join(''));
   }
 
   onOperationButtonPress(button) {
     // функция для получения операционной кнопки, на которой произошел клик
 
-    if (this.#calc.board.prevButton.type === 'operation') {
-      this.#stackMemo.pop();
-      this.#stackMemo.push(button.value); // к текущему значению прибавляется значение кнопки, на которой произошел клик
+    if (this.#calc.board.prevButton.type === 'equality' || this.#calc.board.prevButton.type === 'operation') {
+      this.#stackMemo.length = 0;
+      this.#stackMemo = this.#stackMemo.concat(this.#stack);
+      this.#stackMemo.push(button.value);
     } else {
-      if (this.#calc.board.prevButton.type === 'equality') {
-        this.#stackMemo.length = 0;
-        this.#stackMemo.push(this.#stack); // к текущему значению прибавляется значение кнопки, на которой произошел клик
-        this.#stackMemo.push(button.value); // к текущему значению прибавляется значение кнопки, на которой произошел клик
-      } else {
-        this.#stackMemo.push(button.value); // к текущему значению прибавляется значение кнопки, на которой произошел клик
-      }
+      this.#stackMemo = this.#stackMemo.concat(this.#stack);
+      this.#stackMemo.push(button.value);
     }
-    this.#onResult(this.#stack);
+
+    this.#onResult(this.#stack.join(''));
     this.#onMemoValue(this.#stackMemo.join(''));
   }
 
   onClearButtonPress(button) {
     this.#stackMemo.length = 0;
-    this.#stack = this.#calc.board.digitalButtonList[0].value;
+    this.#stack.length = 0;
+    this.#stack.push(this.#calc.board.digitalButtonList[0].value);
     this.#onResult(this.#stack);
     this.#onMemoValue(this.#stackMemo.join(''));
   }
 
   onEqualityButtonPress(button) {
     // функция для получения кнопки равенства, на которой произошел клик
-    if (this.#calc.board.prevButton.type !== 'equality') {
-      this.#stack = eval(this.#stackMemo.join('')).toString();
-      if (isNaN(this.#stack)) {
-        this.#stack = 'Результат не определен';
+    if (this.#calc.board.prevButton.type === 'equality') {
+      this.#stackMemo.length = 0;
+      this.#stackMemo = this.#stackMemo.concat(this.#stack);
+      this.#stackMemo.push(button.value);
+    } else {
+      this.#stackMemo = this.#stackMemo.concat(this.#stack);
+      if (isNaN(eval(this.#stackMemo.join('')))) {
+        this.#stack.length = 0;
         this.#stackMemo.length = 0;
+        this.#stack.push('Результат не определен');
       } else {
-        this.#stackMemo.push(button.value); // к текущему значению прибавляется значение кнопки, на которой произошел клик
-        this.#stackHistory.push(this.#stackMemo.join('') + this.#stack);
+        this.#stack.length = 0;
+        this.#stack = this.#stack.concat(eval(this.#stackMemo.join('')).toString());
+        this.#stackMemo.push(button.value);
       }
     }
-    this.#onResult(this.#stack);
+
+    this.#onResult(this.#stack.join(''));
     this.#onMemoValue(this.#stackMemo.join(''));
   }
   // onNegativeButtonPress(button) {
@@ -97,34 +101,23 @@ class Processors {
 
   onDotButtonPress(button) {
     if (!this.#stack.includes(this.#calc.board.dotButton.value)) {
-      if (this.#calc.board.prevButton.type === 'dot') {
-        this.#stackMemo.pop();
-        this.#stackMemo.push(button.value); // к текущему значению прибавляется значение кнопки, на которой произошел клик
+      if (this.#calc.board.prevButton.type === 'operation') {
+        this.#stack.length = 0;
+        this.#calc.board.digitalButtonList[0].onButtonClick();
+        this.#stack.push(button.value);
       } else {
-        if (this.#stack === '0') {
-          this.#stack = this.#stack + button.value;
-          this.#stackMemo.push(this.#calc.board.digitalButtonList[0].value);
-          this.#stackMemo.push(button.value);
+        if (this.#calc.board.prevButton.type === 'equality') {
+          this.#stackMemo.length = 0;
+          this.#stack.length = 0;
+          this.#calc.board.digitalButtonList[0].onButtonClick();
+          this.#stack.push(button.value);
         } else {
-          if (this.#calc.board.prevButton.type === 'equality') {
-            this.#stackMemo.length = 0;
-            this.#stack = this.#calc.board.digitalButtonList[0].value + button.value;
-            this.#stackMemo.push(this.#calc.board.digitalButtonList[0].value);
-            this.#stackMemo.push(button.value);
-          } else {
-            if (this.#calc.board.prevButton.type === 'operation') {
-              this.#stack = this.#calc.board.digitalButtonList[0].value + button.value;
-              this.#stackMemo.push(this.#stack);
-            } else {
-              this.#stack = this.#stack + button.value;
-              this.#stackMemo.push(button.value);
-            }
-          }
+          this.#stack.push(button.value);
         }
       }
     }
 
-    this.#onResult(this.#stack);
+    this.#onResult(this.#stack.join(''));
     this.#onMemoValue(this.#stackMemo.join(''));
   }
 
@@ -132,14 +125,10 @@ class Processors {
     if (this.#calc.board.prevButton.type === 'equality') {
       this.#stackMemo.length = 0;
     } else {
-      this.#stack = this.#stack.slice(0, -1);
-      this.#stackMemo.pop();
-      if (this.#stackMemo.length === 0 && this.#stack.length === 0) {
-        this.#stack = this.#calc.board.digitalButtonList[0].value;
-      }
+      this.#stack.pop();
+      if (this.#stack.length === 0) this.#calc.board.digitalButtonList[0].onButtonClick();
     }
-
-    this.#onResult(this.#stack);
+    this.#onResult(this.#stack.join(''));
     this.#onMemoValue(this.#stackMemo.join(''));
   }
 }

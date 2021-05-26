@@ -36,7 +36,6 @@ class Board {
     // this.#negativeButton = new NegativeButton(this, onNegativeButtonClick);
     this.#dotButton = new DotButton(this.#calc, this, onDotButtonClick);
     this.#currentButton = this.#digitalButtonList[0];
-    this.#prevButton = this.#digitalButtonList[0];
   }
   get digitalButtonList() {
     return this.#digitalButtonList;
@@ -106,5 +105,6 @@ class Board {
     this.#boardContainer.appendChild(this.#operationBoard);
     this.#board.appendChild(this.#boardContainer);
     this.#container.appendChild(this.#board);
+    this.#digitalButtonList[0].onButtonClick();
   }
 }
