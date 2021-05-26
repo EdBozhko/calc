@@ -1,8 +1,8 @@
 class CloseButton extends Button {
   #calc;
   #header;
-  constructor(calc, header, onclick) {
-    super(calc, "X", "close", onclick);
+  constructor(calc, header, onclick, disabled) {
+    super(calc, "X", "close", onclick, disabled);
     this.#calc = calc;
     this.#header = header;
   }

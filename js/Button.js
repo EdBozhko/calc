@@ -1,15 +1,17 @@
 class Button {
+  #calc;
   #value;
   #type;
   #onclick;
+  #disabled;
   #container;
   #button;
-  #calc;
-  constructor(calc, value, type, onclick) {
+  constructor(calc, value, type, onclick, disabled) {
+    this.#calc = calc;
     this.#value = value;
     this.#type = type;
     this.#onclick = onclick;
-    this.#calc = calc;
+    this.#disabled = disabled;
   }
 
   onButtonClick(event) {
@@ -24,9 +26,17 @@ class Button {
   get button() {
     return this.#button;
   }
+  get disabled() {
+    return this.#disabled;
+  }
+  set disabled(value) {
+    this.#disabled = value;
+    this.#container.disabled = value
+  }
   render(container) {
     this.#container = container;
     this.#button = document.createElement('button');
+    this.#button.disabled = this.#disabled;
     this.#button.setAttribute('class', 'button');
     this.#button.innerText = this.#value;
     this.#button.addEventListener('click', this.onButtonClick.bind(this));

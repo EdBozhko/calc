@@ -1,8 +1,8 @@
 class ClearButton extends CalcButton {
   #board;
   #calc;
-  constructor(calc, board, onclick) {
-    super(calc, board, "C", "clear", onclick);
+  constructor(calc, board, onclick, disabled) {
+    super(calc, board, "C", "clear", onclick, disabled);
     this.#board = board;
     this.#calc = calc;
   }

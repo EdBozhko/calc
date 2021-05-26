@@ -9,9 +9,9 @@ class Header {
   #calcName;
   constructor(calc, onReplayButtonClick, onHideButtonClick, onCloseButtonClick) {
     this.#calc = calc;
-    this.#replayButton = new ReplayButton(this.#calc, this, onReplayButtonClick);
-    this.#hideButton = new HideButton(this.#calc, this, onHideButtonClick);
-    this.#closeButton = new CloseButton(this.#calc, this, onCloseButtonClick);
+    this.#replayButton = new ReplayButton(this.#calc, this, onReplayButtonClick, false);
+    this.#hideButton = new HideButton(this.#calc, this, onHideButtonClick, false);
+    this.#closeButton = new CloseButton(this.#calc, this, onCloseButtonClick, false);
   }
   get replayButton() {
     return this.#replayButton;

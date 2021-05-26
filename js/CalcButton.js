@@ -1,8 +1,8 @@
 class CalcButton extends Button {
   #board;
   #calc;
-  constructor(calc, board, value, type, onclick) {
-    super(calc, value, type, onclick);
+  constructor(calc, board, value, type, onclick, disabled) {
+    super(calc, value, type, onclick, disabled);
     this.#board = board;
     this.#calc = calc;
   }

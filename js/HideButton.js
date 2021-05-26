@@ -1,8 +1,8 @@
 class HideButton extends Button {
   #calc;
   #header;
-  constructor(calc, header, onclick) {
-    super(calc, '—', 'hide', onclick);
+  constructor(calc, header, onclick, disabled) {
+    super(calc, '—', 'hide', onclick, disabled);
     this.#calc = calc;
     this.#header = header;
   }

@@ -1,8 +1,8 @@
 class DotButton extends CalcButton {
   #board;
   #calc;
-  constructor(calc, board, onclick) {
-    super(calc, board, ".", "dot", onclick);
+  constructor(calc, board, onclick, disabled) {
+    super(calc, board, ".", "dot", onclick, disabled);
     this.#board = board;
     this.#calc = calc;
   }

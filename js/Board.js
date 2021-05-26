@@ -23,18 +23,18 @@ class Board {
     this.#calcContainer = calcContainer;
     this.#calc = calc;
     for (let i = 0; i < 10; i++) {
-      this.#digitalButton = new DigitalButton(this.#calc, this, i.toString(), onDigitalButtonClick);
+      this.#digitalButton = new DigitalButton(this.#calc, this, i.toString(), onDigitalButtonClick, false);
       this.#digitalButtonList.push(this.#digitalButton);
     }
     for (let l = 0; l < this.#operationsList.length; l++) {
-      this.#operationButton = new OperationButton(this.#calc, this, this.#operationsList[l], onOperationButtonClick);
+      this.#operationButton = new OperationButton(this.#calc, this, this.#operationsList[l], onOperationButtonClick, false);
       this.#operationButtonList.push(this.#operationButton);
     }
-    this.#equalityButton = new EqualityButton(this.#calc, this, onEqualityButtonClick);
-    this.#backspaceButton = new BackspaceButton(this.#calc, this, onBackspaceButtonClick);
-    this.#clearButton = new ClearButton(this.#calc, this, onClearButtonClick);
-    // this.#negativeButton = new NegativeButton(this, onNegativeButtonClick);
-    this.#dotButton = new DotButton(this.#calc, this, onDotButtonClick);
+    this.#equalityButton = new EqualityButton(this.#calc, this, onEqualityButtonClick, false);
+    this.#backspaceButton = new BackspaceButton(this.#calc, this, onBackspaceButtonClick, false);
+    this.#clearButton = new ClearButton(this.#calc, this, onClearButtonClick, false);
+    // this.#negativeButton = new NegativeButton(this, onNegativeButtonClick, false);
+    this.#dotButton = new DotButton(this.#calc, this, onDotButtonClick, false);
     this.#currentButton = this.#digitalButtonList[0];
   }
   get digitalButtonList() {

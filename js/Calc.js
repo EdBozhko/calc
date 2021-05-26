@@ -37,8 +37,8 @@ class Calc {
       this.onBackspaceButtonPress,
       this.onClearButtonPress,
       this.onDotButtonPress /* this.onNegativeButtonPress, */,
-      );
-      this.#display = new Display(this);
+    );
+    this.#display = new Display(this);
   }
 
   // -----------------------------
@@ -57,10 +57,12 @@ class Calc {
   }
 
   onReplayButtonPress() {
-    if (this.#header.replayButton.button.disabled) {
-      return;
+    console.log(this.#header.replayButton.disabled);
+    if (this.#header.replayButton.disabled) {
+      return
     }
-    this.#header.replayButton.button.disabled = true;
+    this.#header.replayButton.disabled = true;
+
     this.#replayHistory = [...this.#history];
 
     this.#history.length = 0;
@@ -68,25 +70,25 @@ class Calc {
     this.onClearButtonPress(this);
     setTimeout(() => {
       this.replayOne(this.#replayHistory, () => {
-        this.#header.replayButton.button.disabled = false;
+        this.#header.replayButton.disabled = false;
       });
     }, 1000);
   }
-  hideCalc(){
-    this.#calcHidden = true
+  hideCalc() {
+    this.#calcHidden = true;
     this.#display.display.hidden = true;
     this.#board.board.hidden = true;
   }
-  unHideCalc(){
-    this.#calcHidden = false
+  unHideCalc() {
+    this.#calcHidden = false;
     this.#display.display.hidden = false;
     this.#board.board.hidden = false;
   }
   onHideButtonPress(button) {
     if (this.#calcHidden) {
-      this.unHideCalc()
+      this.unHideCalc();
     } else {
-      this.hideCalc()
+      this.hideCalc();
     }
   }
   onCloseButtonPress(button) {

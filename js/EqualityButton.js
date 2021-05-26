@@ -1,8 +1,8 @@
 class EqualityButton extends CalcButton {
   #board;
   #calc;
-  constructor(calc, board, onclick) {
-    super(calc, board, "=", "equality", onclick);
+  constructor(calc, board, onclick, disabled) {
+    super(calc, board, "=", "equality", onclick, disabled);
     this.#board = board;
     this.#calc = calc;
   }

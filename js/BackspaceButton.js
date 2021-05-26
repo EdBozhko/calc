@@ -1,8 +1,8 @@
 class BackspaceButton extends CalcButton {
   #board;
   #calc;
-  constructor(calc, board, onclick) {
-    super(calc, board, "⟸", "backspace", onclick);
+  constructor(calc, board, onclick, disabled) {
+    super(calc, board, "⟸", "backspace", onclick, disabled);
     this.#board = board;
     this.#calc = calc;
   }
