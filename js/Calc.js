@@ -79,14 +79,14 @@ class Calc {
     this.#display.display.hidden = true;
     this.#board.board.hidden = true;
   }
-  unHideCalc() {
+  showCalc() {
     this.#calcHidden = false;
     this.#display.display.hidden = false;
     this.#board.board.hidden = false;
   }
   onHideButtonPress(button) {
     if (this.#calcHidden) {
-      this.unHideCalc();
+      this.showCalc();
     } else {
       this.hideCalc();
     }

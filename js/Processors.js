@@ -32,12 +32,16 @@ class Processors {
   onDigitalButtonPress(button) {
     // функция для получения цифровой кнопки, на которой произошел клик
 
-    if (this.#calc.board.prevButton.type === 'equality' || (this.#calc.board.prevButton.type === 'backspace' && this.#stackMemo.length === 0)) {
+    if (this.#calc.board.prevButton.type === 'equality') {
       this.#stackMemo.length = 0;
       this.#stack.length = 0;
       this.#stack.push(button.value);
     } else {
-      if ((this.#stack[0] === '0' && this.#stack.length === 1) || this.#calc.board.prevButton.type === 'operation') {
+      if (
+        (this.#stack[0] === '0' && this.#stack.length === 1) ||
+        this.#calc.board.prevButton.type === 'operation' ||
+        (this.#calc.board.prevButton.type === 'backspace' && this.#stackMemo.length > 0)
+      ) {
         this.#stack.length = 0;
         this.#stack.push(button.value);
       } else {
@@ -122,11 +126,13 @@ class Processors {
   }
 
   onBackspaceButtonPress(button) {
-    if (this.#calc.board.prevButton.type === 'equality') {
-      this.#stackMemo.length = 0;
-    } else {
-      this.#stack.pop();
-      if (this.#stack.length === 0) this.#calc.board.digitalButtonList[0].onButtonClick();
+    if (!this.#calc.board.prevButton.type === 'operation') {
+      if (this.#calc.board.prevButton.type === 'equality') {
+        this.#stackMemo.length = 0;
+      } else {
+        this.#stack.pop();
+        if (this.#stack.length === 0) this.#calc.board.digitalButtonList[0].onButtonClick();
+      }
     }
     this.#onResult(this.#stack.join(''));
     this.#onMemoValue(this.#stackMemo.join(''));
