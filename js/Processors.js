@@ -7,6 +7,7 @@ class Processors {
   #stackHistory;
   #onResult;
   #onMemoValue;
+  #calcResult;
   /**
    *
    * @param {Calc} calc
@@ -31,23 +32,27 @@ class Processors {
   }
   onDigitalButtonPress(button) {
     // функция для получения цифровой кнопки, на которой произошел клик
-
-    if (this.#calc.board.prevButton.type === 'equality') {
-      this.#stackMemo.length = 0;
-      this.#stack.length = 0;
-      this.#stack.push(button.value);
-    } else {
-      if (
-        (this.#stack[0] === '0' && this.#stack.length === 1) ||
-        this.#calc.board.prevButton.type === 'operation' ||
-        (this.#calc.board.prevButton.type === 'backspace' && this.#stackMemo.length > 0)
-      ) {
+    
+    if (this.#stack.length < 11) {
+      if (this.#calc.board.prevButton.type === 'equality') {
+        this.#stackMemo.length = 0;
         this.#stack.length = 0;
         this.#stack.push(button.value);
       } else {
-        this.#stack.push(button.value);
+        if (
+          (this.#stack[0] === '0' && this.#stack.length === 1) ||
+          this.#calc.board.prevButton.type === 'operation' ||
+          (this.#calc.board.prevButton.type === 'backspace' && this.#stackMemo.length > 0)
+        ) {
+          this.#stack.length = 0;
+          this.#stack.push(button.value);
+        } else {
+          this.#stack.push(button.value);
+        }
       }
+      
     }
+
 
     this.#onResult(this.#stack.join(''));
     this.#onMemoValue(this.#stackMemo.join(''));
@@ -64,6 +69,7 @@ class Processors {
       this.#stackMemo = this.#stackMemo.concat(this.#stack);
       this.#stackMemo.push(button.value);
     }
+
 
     this.#onResult(this.#stack.join(''));
     this.#onMemoValue(this.#stackMemo.join(''));
@@ -95,8 +101,8 @@ class Processors {
         this.#stackMemo.push(button.value);
       }
     }
-
-    this.#onResult(this.#stack.join(''));
+    this.#calcResult = this.#stack.join('');
+    this.#onResult(this.#calcResult);
     this.#onMemoValue(this.#stackMemo.join(''));
   }
   // onNegativeButtonPress(button) {
@@ -126,7 +132,7 @@ class Processors {
   }
 
   onBackspaceButtonPress(button) {
-    if (!this.#calc.board.prevButton.type === 'operation') {
+    if (this.#calc.board.prevButton.type !== 'operation') {
       if (this.#calc.board.prevButton.type === 'equality') {
         this.#stackMemo.length = 0;
       } else {
