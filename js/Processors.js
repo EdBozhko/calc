@@ -4,7 +4,6 @@ class Processors {
   #calc; //объявление приватных переменных
   #stack;
   #stackMemo;
-  #stackHistory;
   #onResult;
   #onMemoValue;
   #calcResult;
@@ -17,7 +16,6 @@ class Processors {
     this.#calc = calc; // приинимаем в аргумент и сохраняем ссылку на Calc, который создал процессор
     this.#stack = []; // стек для хранения ТЕКУЩЕГО ЗНАЧЕНИЯ, ПОСЛЕДНЕЙ ОПЕРАЦИИ, ИСТОРИЯ ОПЕРАЦИЙ
     this.#stackMemo = [];
-    this.#stackHistory = [];
     this.#onMemoValue = onMemoValue;
     this.#onResult = onResult;
     this.onDigitalButtonPress = this.onDigitalButtonPress.bind(this);
@@ -32,27 +30,26 @@ class Processors {
   }
   onDigitalButtonPress(button) {
     // функция для получения цифровой кнопки, на которой произошел клик
-    
-    if (this.#stack.length < 11) {
-      if (this.#calc.board.prevButton.type === 'equality') {
-        this.#stackMemo.length = 0;
+
+    if (this.#stack.length > 10) {
+      return;
+    }
+    if (this.#calc.board.prevButton.type === 'equality') {
+      this.#stackMemo.length = 0;
+      this.#stack.length = 0;
+      this.#stack.push(button.value);
+    } else {
+      if (
+        (this.#stack[0] === '0' && this.#stack.length === 1) ||
+        this.#calc.board.prevButton.type === 'operation' ||
+        (this.#calc.board.prevButton.type === 'backspace' && this.#stackMemo.length > 0)
+      ) {
         this.#stack.length = 0;
         this.#stack.push(button.value);
       } else {
-        if (
-          (this.#stack[0] === '0' && this.#stack.length === 1) ||
-          this.#calc.board.prevButton.type === 'operation' ||
-          (this.#calc.board.prevButton.type === 'backspace' && this.#stackMemo.length > 0)
-        ) {
-          this.#stack.length = 0;
-          this.#stack.push(button.value);
-        } else {
-          this.#stack.push(button.value);
-        }
+        this.#stack.push(button.value);
       }
-      
     }
-
 
     this.#onResult(this.#stack.join(''));
     this.#onMemoValue(this.#stackMemo.join(''));
@@ -60,6 +57,19 @@ class Processors {
 
   onOperationButtonPress(button) {
     // функция для получения операционной кнопки, на которой произошел клик
+    const operationsList = this.#calc.board.operationsList;
+    const stackMemoLastElement = this.#stackMemo[this.#stackMemo.length - 1];
+    if (operationsList[operationsList.indexOf(stackMemoLastElement)] === stackMemoLastElement) {
+      this.#stackMemo = this.#stackMemo.concat(this.#stack);
+      this.#stack.length = 0;
+      this.#stack = this.#stack.concat(eval(this.#stackMemo.join('')).toString());
+      this.#stackMemo.length = 0;
+      this.#stackMemo = this.#stackMemo.concat(this.#stack);
+      this.#stackMemo.push(button.value);
+      this.#onResult(this.#stack.join(''));
+      this.#onMemoValue(this.#stackMemo.join(''));
+      return;
+    }
 
     if (this.#calc.board.prevButton.type === 'equality' || this.#calc.board.prevButton.type === 'operation') {
       this.#stackMemo.length = 0;
@@ -69,8 +79,6 @@ class Processors {
       this.#stackMemo = this.#stackMemo.concat(this.#stack);
       this.#stackMemo.push(button.value);
     }
-
-
     this.#onResult(this.#stack.join(''));
     this.#onMemoValue(this.#stackMemo.join(''));
   }
@@ -110,20 +118,21 @@ class Processors {
   // }
 
   onDotButtonPress(button) {
-    if (!this.#stack.includes(this.#calc.board.dotButton.value)) {
-      if (this.#calc.board.prevButton.type === 'operation') {
+    if (this.#stack.includes(this.#calc.board.dotButton.value)) {
+      return;
+    }
+    if (this.#calc.board.prevButton.type === 'operation') {
+      this.#stack.length = 0;
+      this.#calc.board.digitalButtonList[0].onButtonClick();
+      this.#stack.push(button.value);
+    } else {
+      if (this.#calc.board.prevButton.type === 'equality') {
+        this.#stackMemo.length = 0;
         this.#stack.length = 0;
         this.#calc.board.digitalButtonList[0].onButtonClick();
         this.#stack.push(button.value);
       } else {
-        if (this.#calc.board.prevButton.type === 'equality') {
-          this.#stackMemo.length = 0;
-          this.#stack.length = 0;
-          this.#calc.board.digitalButtonList[0].onButtonClick();
-          this.#stack.push(button.value);
-        } else {
-          this.#stack.push(button.value);
-        }
+        this.#stack.push(button.value);
       }
     }
 
@@ -132,14 +141,16 @@ class Processors {
   }
 
   onBackspaceButtonPress(button) {
-    if (this.#calc.board.prevButton.type !== 'operation') {
-      if (this.#calc.board.prevButton.type === 'equality') {
-        this.#stackMemo.length = 0;
-      } else {
-        this.#stack.pop();
-        if (this.#stack.length === 0) this.#calc.board.digitalButtonList[0].onButtonClick();
-      }
+    if (this.#calc.board.prevButton.type === 'operation') {
+      return;
     }
+    if (this.#calc.board.prevButton.type === 'equality') {
+      this.#stackMemo.length = 0;
+    } else {
+      this.#stack.pop();
+      if (this.#stack.length === 0) this.#calc.board.digitalButtonList[0].onButtonClick();
+    }
+
     this.#onResult(this.#stack.join(''));
     this.#onMemoValue(this.#stackMemo.join(''));
   }
