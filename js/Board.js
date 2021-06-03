@@ -1,82 +1,94 @@
 class Board {
   #digitalButtonList = [];
   #operationButtonList = [];
-  #equalityButton;
-  // #negativeButton;
-  #dotButton
-  #clearButton;
-  #backspaceButton;
   #operationsList = ['+', '-', '*', '/'];
+  #calcContainer;
   #calc;
+  #digitalButton;
+  #operationButton;
+  #equalityButton;
+  #backspaceButton;
+  #clearButton;
+  #dotButton;
   #currentButton;
   #prevButton;
   #container;
   #board;
   #boardContainer;
-  #digitalButton;
-  #digitalBoard;
   #operationBoard;
+  #digitalBoard;
   #additionalFunctionsBoard;
-  #operationButton;
-  #calcContainer;
-  constructor(calcContainer, calc, onDigitalButtonClick, onOperationButtonClick, onEqualityButtonClick, onBackspaceButtonClick, onClearButtonClick, onDotButtonClick /* onNegativeButtonClick, ,*/) {
+
+  constructor(calcContainer, calc, onDigitalButtonClick, onOperationButtonClick, onEqualityButtonClick, onBackspaceButtonClick, onClearButtonClick, onDotButtonClick) {
     this.#calcContainer = calcContainer;
     this.#calc = calc;
+
     for (let i = 0; i < 10; i++) {
       this.#digitalButton = new DigitalButton(this.#calc, this, i.toString(), onDigitalButtonClick, false);
       this.#digitalButtonList.push(this.#digitalButton);
     }
+
     for (let l = 0; l < this.#operationsList.length; l++) {
       this.#operationButton = new OperationButton(this.#calc, this, this.#operationsList[l], onOperationButtonClick, false);
       this.#operationButtonList.push(this.#operationButton);
     }
+
     this.#equalityButton = new EqualityButton(this.#calc, this, onEqualityButtonClick, false);
     this.#backspaceButton = new BackspaceButton(this.#calc, this, onBackspaceButtonClick, false);
     this.#clearButton = new ClearButton(this.#calc, this, onClearButtonClick, false);
-    // this.#negativeButton = new NegativeButton(this, onNegativeButtonClick, false);
     this.#dotButton = new DotButton(this.#calc, this, onDotButtonClick, false);
     this.#currentButton = this.#digitalButtonList[0];
   }
+
+  get calc() {
+    return this.#calc;
+  }
+
+  get operationsList() {
+    return this.#operationsList;
+  }
+
   get digitalButtonList() {
     return this.#digitalButtonList;
   }
+
   get operationButtonList() {
     return this.#operationButtonList;
   }
+
   get equalityButton() {
     return this.#equalityButton;
   }
-  get clearButton() {
-    return this.#clearButton;
-  }
-  // get negativeButton() {
-  //   return this.#negativeButton;
-  // }
-  get dotButton() {
-    return this.#dotButton;
-  }
+
   get backspaceButton() {
     return this.#backspaceButton;
   }
+
+  get clearButton() {
+    return this.#clearButton;
+  }
+
+  get dotButton() {
+    return this.#dotButton;
+  }
+
   get currentButton() {
     return this.#currentButton;
   }
+
   set currentButton(value) {
     this.#prevButton = this.#currentButton;
     this.#currentButton = value;
   }
+
   get prevButton() {
     return this.#prevButton;
   }
+
   get board() {
     return this.#board;
   }
-  get calc() {
-    return this.#calc;
-  }
-  get operationsList() {
-    return this.#operationsList;
-  }
+
   render(container) {
     this.#container = container;
     this.#board = document.createElement('div');
@@ -95,10 +107,9 @@ class Board {
     for (let j = 0; j < this.#operationButtonList.length; j++) {
       this.#operationButtonList[j].render(this.#operationBoard);
     }
-    this.#backspaceButton.render(this.#operationBoard);
     this.#equalityButton.render(this.#operationBoard);
+    this.#backspaceButton.render(this.#operationBoard);
     this.#clearButton.render(this.#additionalFunctionsBoard);
-    // this.#negativeButton.render(this.#digitalBoard);
     this.#dotButton.render(this.#digitalBoard);
     this.#boardContainer.appendChild(this.#additionalFunctionsBoard);
     this.#boardContainer.appendChild(this.#digitalBoard);

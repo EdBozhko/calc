@@ -136,11 +136,6 @@ label {
   grid-column-end: 3;
 }
 
-/* .board__digital-board,
-.board__operation-board {
-  margin-bottom: 5px;
-} */
-
 .button--digital:nth-child(12) {
   order: 12;
 }
@@ -210,4 +205,3 @@ label {
 .button--equality:hover {
   background-color: #0975ca;
 }
-

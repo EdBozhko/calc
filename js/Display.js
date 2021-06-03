@@ -2,11 +2,11 @@ class Display {
   #calc;
   #result;
   #memo;
-  #display;
+  #container;
   #displayContainer;
+  #display;
   #displayMemo;
   #displayResult;
-  #container;
   constructor(calc, value, memoValue = '') {
     this.#calc = calc;
     this.#result = value;
@@ -16,6 +16,7 @@ class Display {
   get result() {
     return this.#result;
   }
+
   set result(value) {
     this.#result = value;
   }
@@ -23,24 +24,31 @@ class Display {
   get memoValue() {
     return this.#memo;
   }
+
   set memoValue(value) {
     this.#memo = value;
   }
-  get displayResult() {
-    return this.#displayResult;
-  }
-  set displayResult(value) {
-    this.#displayResult = value;
-  }
-  get displayMemo() {
-    return this.#displayMemo;
-  }
-  set displayMemo(value) {
-    this.#displayMemo = value;
-  }
+
   get display() {
     return this.#display;
   }
+
+  get displayResult() {
+    return this.#displayResult;
+  }
+
+  set displayResult(value) {
+    this.#displayResult = value;
+  }
+
+  get displayMemo() {
+    return this.#displayMemo;
+  }
+
+  set displayMemo(value) {
+    this.#displayMemo = value;
+  }
+
   render(container) {
     this.#container = container;
     this.#display = document.createElement('div');

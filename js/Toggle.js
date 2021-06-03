@@ -3,9 +3,11 @@ class Toggle {
   #toggle;
   #toggleLabel;
   #sync;
+
   constructor() {
     this.#sync = false;
   }
+
   get sync() {
     return this.#sync;
   }

@@ -5,6 +5,7 @@ class CalcContainer {
   #index = 0;
   #toggle;
   #newCalc;
+
   constructor(buttonContainer, toggleContainer, containerId) {
     this.#calcItems = new Map();
     this.#calcContainer = this;
@@ -19,9 +20,11 @@ class CalcContainer {
     this.onClearButtonPress = this.onClearButtonPress.bind(this);
     this.onDotButtonPress = this.onDotButtonPress.bind(this);
   }
+
   get calcContainer() {
     return this.#calcContainer;
   }
+
   get toggle() {
     return this.#toggle;
   }
@@ -32,6 +35,7 @@ class CalcContainer {
     this.#calcItems.set(this.#index, this.#newCalc);
     this.#newCalc.render(containerId);
   }
+
   delete(index) {
     this.#calcItems.delete(index);
   }
@@ -59,30 +63,34 @@ class CalcContainer {
       calc.board.digitalButtonList[parseInt(button.value)].onButtonClick(customEvent);
     });
   }
+
   onOperationButtonPress(button, event) {
     this.syncMode(button, event, button.board.calc.processor.onOperationButtonPress, (calc, button, customEvent) => {
       calc.board.operationButtonList[button.board.operationsList.indexOf(button.value)].onButtonClick(customEvent);
     });
   }
-  onDotButtonPress(button, event) {
-    this.syncMode(button, event, button.board.calc.processor.onDotButtonPress, (calc, button, customEvent) => {
-      calc.board.dotButton.onButtonClick(customEvent);
-    });
-  }
-  onClearButtonPress(button, event) {
-    this.syncMode(button, event, button.board.calc.processor.onClearButtonPress, (calc, button, customEvent) => {
-      calc.board.clearButton.onButtonClick(customEvent);
-    });
-  }
+
   onEqualityButtonPress(button, event) {
     this.syncMode(button, event, button.board.calc.processor.onEqualityButtonPress, (calc, button, customEvent) => {
       calc.board.equalityButton.onButtonClick(customEvent);
     });
   }
+
   onBackspaceButtonPress(button, event) {
     this.syncMode(button, event, button.board.calc.processor.onBackspaceButtonPress, (calc, button, customEvent) => {
       calc.board.backspaceButton.onButtonClick(customEvent);
     });
   }
+
+  onClearButtonPress(button, event) {
+    this.syncMode(button, event, button.board.calc.processor.onClearButtonPress, (calc, button, customEvent) => {
+      calc.board.clearButton.onButtonClick(customEvent);
+    });
+  }
+
+  onDotButtonPress(button, event) {
+    this.syncMode(button, event, button.board.calc.processor.onDotButtonPress, (calc, button, customEvent) => {
+      calc.board.dotButton.onButtonClick(customEvent);
+    });
+  }
 }
-const a = new CalcContainer(document.querySelector('.main-header'), document.querySelector('.main-header'), 'container');

@@ -3,25 +3,30 @@ class Header {
   #replayButton;
   #hideButton;
   #closeButton;
-  #actionButtonsList;
-  #header;
   #container;
+  #header;
   #calcName;
+  #actionButtonsList;
+
   constructor(calc, onReplayButtonClick, onHideButtonClick, onCloseButtonClick) {
     this.#calc = calc;
     this.#replayButton = new ReplayButton(this.#calc, this, onReplayButtonClick, false);
     this.#hideButton = new HideButton(this.#calc, this, onHideButtonClick, false);
     this.#closeButton = new CloseButton(this.#calc, this, onCloseButtonClick, false);
   }
+
   get replayButton() {
     return this.#replayButton;
   }
+
   get hideButton() {
     return this.#hideButton;
   }
+
   get closeButton() {
     return this.#closeButton;
   }
+
   render(container) {
     this.#container = container;
     this.#header = document.createElement('header');
